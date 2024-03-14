@@ -75,7 +75,11 @@ class big_goblins(Goblins):
         
 
 class Trolls(Character):
-    pass
+    def __init__ (self, name="Trolls", hp=35, attack_value=15, defense_value=13, dice=Dice("black", 6)):
+        super().__init__(name, hp, attack_value, defense_value, dice)
+
+class Troll_trucs(Trolls):
+    print("🧌")
 
 
 class Renegas(Character):
