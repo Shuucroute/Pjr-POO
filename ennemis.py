@@ -164,3 +164,7 @@ while char1.is_alive() and char2.is_alive() and char3.is_alive() and char4.is_al
     char1.attack(char4)
     char1.attack(char5)
     char1.attack(char6)
+
+
+
+#okokok
