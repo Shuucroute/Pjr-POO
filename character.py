@@ -81,9 +81,3 @@ class Thief(Character):
         return super().compute_damages(roll, target) + target.defense_value
 
 
-#char1 = Warrior("James", 20, 8, 4, Dice("red", 6))
-#char2 = Thief("Lisa", 20, 8, 3, Dice("blue", 6))
-
-#while char1.is_alive() and char2.is_alive():
-    #char1.attack(char2)
-    #char2.attack(char1)
