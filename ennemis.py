@@ -78,8 +78,10 @@ class Trolls(Character):
     def __init__ (self, name="Trolls", hp=35, attack_value=15, defense_value=13, dice=Dice("black", 6)):
         super().__init__(name, hp, attack_value, defense_value, dice)
 
-class Troll_trucs(Trolls):
-    print("🧌")
+class Olog_hai(Trolls):
+    def compute_damages(self, roll, target):
+        print("🧌 Olog_hai vous attaque ! (+5 dmg)")
+        return super().compute_damages(roll, target) + 5
 
 
 class Renegas(Character):

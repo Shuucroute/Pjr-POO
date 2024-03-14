@@ -1,6 +1,7 @@
 from dice import Dice
 from rich import print
 
+
 # SOLID
 # S
 # D
@@ -51,7 +52,7 @@ class Character:
             target.defense(damages, self)
 
     def compute_raw_damages(self, damages, roll, attacker):
-        return damages - self.defense_value - roll
+        return max(0, damages - self.defense_value - roll)
 
     def defense(self, damages, attacker):
         roll = self.dice.roll()
@@ -80,9 +81,9 @@ class Thief(Character):
         return super().compute_damages(roll, target) + target.defense_value
 
 
-char1 = Warrior("James", 20, 8, 4, Dice("red", 6))
-char2 = Thief("Lisa", 20, 8, 3, Dice("blue", 6))
+#char1 = Warrior("James", 20, 8, 4, Dice("red", 6))
+#char2 = Thief("Lisa", 20, 8, 3, Dice("blue", 6))
 
-while char1.is_alive() and char2.is_alive():
-    char1.attack(char2)
-    char2.attack(char1)
+#while char1.is_alive() and char2.is_alive():
+    #char1.attack(char2)
+    #char2.attack(char1)
