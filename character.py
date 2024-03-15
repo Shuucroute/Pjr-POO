@@ -1,11 +1,4 @@
 from dice import Dice
-from rich import print
-
-
-# SOLID
-# S
-# D
-
 
 class Character:
     def __init__(self, name, hp_max, attack_value, defense_value, dice) -> None:
@@ -90,21 +83,22 @@ class Druid(Character):
     def __init__(self, name, hp_max, attack_value, defense_value, dice, mana_max, healing_value):
         super().__init__(name, hp_max, attack_value, defense_value, dice)
         self.mana_max = mana_max
-        self.mana = mana_max
+        self.mana = dice.roll()
         self.healing_value = healing_value
+        self.allies = []
 
-    def has_enough_mana(self, mana_cost):
-        return self.mana >= mana_cost
-
-    def heal(self, target):
-        if self.is_alive():
-            if isinstance(self.healing_value, int) and self.has_enough_mana(5):
-                roll = self.dice.roll()
-                healing = self.healing_value + roll
-                self.mana -= 5
-                print(f"{self.name} [green]heals[green] {target.name} with {healing} pv")
-                target.increase_hp(healing)
-            else:
-                print(f"{self.name} doesn't have enough mana to cast a spell.")
+    def heal_ally(self, target):
+        if target in self.allies and self.mana >= self.healing_value:
+            self.mana -= self.healing_value
+            target.increase_hp(self.healing_value)
+            print(f"{self.name} [vert]soigne[/vert] {target.name} de {self.healing_value} pv (mana: {self.mana}/{self.mana_max})")
         else:
-            print(f"{self.name} is not alive.")
+            print(f"{self.name} n'a pas assez de mana pour lancer un sort.")
+
+    def cast_spell(self, target):
+        if target in self.allies and self.mana >= 5:
+            self.mana -= 5
+            self.heal_ally(target)
+            print(f"{self.name} [vert]lance un sort[/vert] sur {target.name} (mana: {self.mana}/{self.mana_max})")
+        elif target in self.allies:
+            print(f"{self.name} n'a pas assez de mana pour lancer un sort.")

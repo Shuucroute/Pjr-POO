@@ -1,3 +1,22 @@
+from character import Character
+from dice import Dice 
+
+class Zombie(Character):
+    def init(self, name="Zombie", hp=20, attack_value=5, defense_value=5, dice=Dice("green", 6)):
+        super().init(name, hp, attack_value, defense_value, dice)
+
+    def compute_damages(self, roll, target):
+        print(f"🧟 Zombie t'attaque !")
+        return super().compute_damages(roll, target)
+
+    def compute_raw_damages(self, damages, roll, attacker):
+        print(f"🧟 Zombie est faible !")
+        return super().compute_raw_damages(damages, roll, attacker)
+
+    @staticmethod
+    def create_enemy(dice):
+        return Zombie("Zombie", hp=20, attack_value=5, defense_value=5, dice=dice)
+    
 class Zombie2_0(Zombie):
     def compute_damages(self, roll, target):
         print(f"🧟 Zombie robuste t'attaque ! (+2 dmg)")
@@ -56,7 +75,7 @@ class Reinforced_Skeleton(Skeletons):
 class armor_Skeletons(Skeletons):
     def compute_raw_damages(self, damages, roll, attacker):
         print(f"💀 Squelettes à armure prends des dégâts ! (-6 dmg)")
-        return super().compute_raw_damages(damages, roll
+        return super().compute_raw_damages(damages, roll)
 
 
 class Goblins(Character):
@@ -150,19 +169,21 @@ class TESTE(Character):
         super().__init__(name, hp, attack_value, defense_value, dice)
 
 
-char1 = TESTE()
-char2 = Roi_Gobelin()
-char3 = Garrok_le_Féroce()
-char4 = Kondylos_o_Sarantapus()
-char5 = Cadaverus_Devorator()
-char6 = Roi_Gobelin()
+ENNEMIES = [Zombie, Zombie2_0, Zombie_guerrier, Skeletons, Reinforced_Skeleton, armor_Skeletons, Goblins]
 
-while char1.is_alive() and char2.is_alive() and char3.is_alive() and char4.is_alive() and char5.is_alive() and char6.is_alive():
-    char1.attack(char2)
-    char1.attack(char3)
-    char1.attack(char4)
-    char1.attack(char5)
-    char1.attack(char6)
+#char1 = TESTE()
+#char2 = Roi_Gobelin()
+#char3 = Garrok_le_Féroce()
+#char4 = Kondylos_o_Sarantapus()
+#char5 = Cadaverus_Devorator()
+#char6 = Roi_Gobelin()
+
+#while char1.is_alive() and char2.is_alive() and char3.is_alive() and char4.is_alive() and char5.is_alive() and char6.is_alive():
+ #   char1.attack(char2)
+  #  char1.attack(char3)
+  #  char1.attack(char4)
+  #  char1.attack(char5)
+  #  char1.attack(char6)
 
 
 
