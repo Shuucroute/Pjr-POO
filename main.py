@@ -1,28 +1,40 @@
+import sys
 import character
 import random
+from dice import Dice
 import ennemis
-import dice
-#import menu
+import menu
 
 # Créer une instance de dé
-dice = dice.Dice(color="black", faces=6)
+dice = Dice(color="black", faces=6)
 
-# Appeler la fonction main depuis le fichier menu.py et passer en argument la variable player
-#menu.main(player)
+# Appeler la fonction show_main_menu depuis le fichier menu.py pour afficher le menu principal du jeu
+menu.show_main_menu()
 
-# Créer des instances de personnages
-player = character.Character("Player", 100, 10, 5, dice)
+# Afficher une invite pour entrer une réponse
+choice = input("Entrez votre choix : ")
 
-# Créer des instances de personnages
-enemy = random.choice(ennemis.ENNEMIES).create_enemy(dice)
-#druid = character.Druid("Druid", 120, 8, 6, dice, 20, random)
+# Appeler la fonction select_character depuis le fichier menu.py et passer en argument la variable player
+if choice == "1":
+    player = menu.select_character()
 
-# Faire combattre le joueur et le druide contre l'ennemi
-player.attack(enemy)
-#druid.heal(player)
-player.attack(enemy)
+    # Créer des instances de personnages
+    if player is not None:
+        enemy = random.choice(ennemis.ENNEMIES).create_enemy(dice)
 
-# Afficher les caractéristiques des personnages
-print(player)
-print(enemy)
-#print(druid)
+        # Faire combattre le joueur et l'ennemi
+        player.attack(enemy)
+
+        # Afficher les caractéristiques des personnages
+        print(player)
+        print(enemy)
+    else:
+        print("Aucun personnage n'a été sélectionné.")
+elif choice == "2":
+    print("Chargement d'une partie...")
+    # Ajouter la logique de chargement de la partie ici
+elif choice == "3":
+    print("Au revoir !")
+    sys.exit()
+else:
+    print("Choix invalide")
