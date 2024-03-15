@@ -1,6 +1,7 @@
 import sys
 import character
 import random 
+import dice
 
 def show_main_menu():
     print("Bienvenue dans le jeu !")
@@ -16,20 +17,19 @@ def select_character():
         choice = input("Entrez votre choix : ")
         if choice == "1":
             name = input("Entrez le nom de votre personnage : ")
-            character_class = input("Choisissez votre classe (Archer, Druid, Thief, Warrior, Mage) : ")
-            if character_class.lower() == "archer":
+            character_class = input("Choisissez votre classe (Archer, Druid, Thief, Warrior, Mage) : ").lower()
+            if character_class == "archer":
                 return character.Archer(name, 100, 10, 5, character.Dice_spawn())
-            elif character_class.lower() == "druid":
+            elif character_class == "druid":
                 return character.Druid(name, 120, 8, 6, character.Dice_spawn(), 20, random.randint(1, 5))
-            elif character_class.lower() == "thief":
+            elif character_class == "thief":
                 return character.Thief(name, 80, 12, 4, character.Dice_spawn())
-            elif character_class.lower() == "warrior":
+            elif character_class == "warrior":
                 return character.Warrior(name, 150, 6, 8, character.Dice_spawn())
-            elif character_class.lower() == "mage":
+            elif character_class == "mage":
                 return character.Mage(name, 80, 15, 3, character.Dice_spawn())
             else:
                 print("Classe invalide.")
-                continue
         elif choice == "2":
             print("Chargement d'une partie...")
             # Ajouter la logique de chargement de la partie ici
@@ -37,4 +37,4 @@ def select_character():
             print("Au revoir !")
             sys.exit()
         else:
-            print("Choix invalide. Veuillez réessayer.")
+            print("Choix invalide.")
