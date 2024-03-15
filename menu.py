@@ -1,12 +1,14 @@
 import sys
-import character 
-
+import character
+import random 
 
 def show_main_menu():
     print("Bienvenue dans le jeu !")
-    print("1. Nouvelle partie")
-    print("2. Charger une partie")
-    print("3. Quitter")
+    print("/" * 30)
+    print("|", "1. Nouvelle partie".ljust(25), "|")
+    print("|", "2. Charger une partie".ljust(25), "|")
+    print("|", "3. Quitter".ljust(25), "|")
+    print("/" * 30)
 
 def select_character():
     show_main_menu()
