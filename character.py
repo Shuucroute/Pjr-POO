@@ -68,6 +68,10 @@ class Mage(Character):
     def compute_raw_damages(self, damages, roll, attacker):
         print(f"🔮 Magic armor ! (-3 dmg)")
         return super().compute_raw_damages(damages, roll, attacker) - 3
+    
+    def show_manabar(self):
+        print(
+            f"[{'🔵' * self.mana}{'⚪' * (self.mana_max - self.mana)}] {self.mana}/{self.mana_max}mana") 
 
 
 class Thief(Character):
@@ -85,29 +89,32 @@ class Druid(Character):
     def __init__(self, name, hp_max, attack_value, defense_value, dice, mana_max, healing_value):
         super().__init__(name, hp_max, attack_value, defense_value, dice)
         self.mana_max = mana_max
-        self.mana = dice.roll()
+        self.mana = 20
         self.healing_value = healing_value
         self.allies = []
 
     def heal_ally(self, target):
         if target in self.allies and self.mana >= self.healing_value:
-            self.mana -= self.healing_value
-            target.increase_hp(self.healing_value)
-            print(f"{self.name} [vert]soigne[/vert] {target.name} de {self.healing_value} pv (mana: {self.mana}/{self.mana_max})")
+            heal_amount = min(self.healing_value, target.hp_max - target.hp)
+            target.increase_hp(heal_amount)
+            print(f"{self.name} [green]soigne[/green] {target.name} de {self.healing_value} pv (mana: {self.mana}/{self.mana_max})")
+            target.show_healthbar()
         else:
             print(f"{self.name} n'a pas assez de mana pour lancer un sort.")
 
     def show_manabar(self):
         print(
-            f"[{'🔵' * self.mana}{'⚪' * (self.mana_max - self.mana)}] {self.mana}/{self.mana_max}hp")        
+            f"[{'🔵' * self.mana}{'⚪' * (self.mana_max - self.mana)}] {self.mana}/{self.mana_max}mana")        
 
     def cast_spell(self, target):
+        self.show_manabar()
         mana_cost = random.randint(1, 5)  # Déterminer un coût de mana aléatoire entre 1 et 5
-
-        if target in self.allies and self.mana >= 5:
-            self.mana -= 5
+        if target in self.allies and self.mana >= mana_cost:
+            self.mana -= mana_cost
             self.heal_ally(target)
-            print(f"{self.name} [vert]lance un sort[/vert] sur {target.name} (mana: {self.mana}/{self.mana_max})")
+            print(f"{self.name} [green]lance un sort[/green] sur {target.name} (mana: {self.mana}/{self.mana_max})")
         elif target in self.allies:
             print(f"{self.name} n'a pas assez de mana pour lancer un sort.")
+        else:
+            print("Cet allié n'est pas dans la liste des alliés.")
         self.show_manabar()
