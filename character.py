@@ -1,5 +1,5 @@
 from dice import Dice
-
+from rich import print
 class Character:
     def __init__(self, name, hp_max, attack_value, defense_value, dice) -> None:
         self.name = name

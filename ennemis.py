@@ -1,16 +1,21 @@
 from character import Character
 from dice import Dice 
+from rich import print
+from rich.console import Console
+from rich.text import Text
+
 
 class Zombie(Character):
     def __init__(self, name="Zombie", hp=20, attack_value=5, defense_value=5, dice=Dice("green", 6)):
         super().__init__(name, hp, attack_value, defense_value, dice)
+        self.name = Text(f"[bold green]{self.name}[/bold green]")
 
     def compute_damages(self, roll, target):
-        print(f"🧟 Zombie Vous attaque !")
+        print(f"🧟 {self.name} [bold]Vous attaque ![/bold]")
         return super().compute_damages(roll, target)
 
     def compute_raw_damages(self, damages, roll, attacker):
-        print(f"🧟 Zombie a faim !")
+        print(f"🧟 {self.name} [bold]prend des dégâts ![/bold]")
         return super().compute_raw_damages(damages, roll, attacker)
 
     @classmethod
@@ -19,11 +24,9 @@ class Zombie(Character):
     
 class Zombie2_0(Zombie):
     def compute_damages(self, roll, target):
-        print(f"🧟 Zombie robuste t'attaque ! (+2 dmg)")
         return super().compute_damages(roll, target) + 2
     
     def compute_raw_damages(self, damages, roll, attacker):
-        print(f"🧟 Zombie robuste a faim ! (-2 dmg)" )
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 2
         return max(0, raw_damages)  # Assure que les dégâts ne peuvent pas être négatifs
     
@@ -33,11 +36,10 @@ class Zombie2_0(Zombie):
 
 class Zombie_guerrier(Zombie):
     def compute_damages(self, roll, target):
-        print(f"🧟 Zombie guerrier t'attaque ! (+5 dmg)")
+        print(f"🧟 {self.name} [bold]Vous attaque ![/bold] (+5 dmg)")
         return super().compute_damages(roll, target) + 5
     
     def compute_raw_damages(self, damages, roll, attacker):
-        print(f"🧟 Zombie guerrier a faim ! (-5 dmg)")
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 5
         return max(0, raw_damages)
     
@@ -48,13 +50,14 @@ class Zombie_guerrier(Zombie):
 class Skeletons(Character):
     def __init__(self, name="Squelettes", hp=20, attack_value=5, defense_value=3, dice=Dice("White", 6)):
         super().__init__(name, hp, attack_value, defense_value, dice)
+        self.name = Text(f"[bold white]{self.name}[/ bold white]")
 
     def compute_damages(self, roll, target):
-        print(f"💀 Squelette vous attaque ! (+3 dmg)")
+        print(f"💀 {self.name} [bold]Vous attaque ![/bold] (+3 dmg)")
         return super().compute_damages(roll, target) + 3
         
     def compute_raw_damages(self, damages, roll, attacker):
-        print(f"💀 Squelette prends des dégâts !")
+        print(f"💀 {self.name} [bold]prend des dégâts ![bold]")
         return super().compute_raw_damages(damages, roll, attacker)
     
     @classmethod
@@ -63,11 +66,10 @@ class Skeletons(Character):
 
 class Reinforced_Skeleton(Skeletons):
     def compute_damages(self, roll, target):
-        print(f"💀 Squelette renforcé vous attaque ! (+5 dmg)")
         return super().compute_damages(roll, target) + 5
     
     def compute_raw_damages(self, damages, roll, attacker):
-        print(f"💀 Squelette renforcé prends des dégâts ! (-3 dmg)")
+
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 3
         return max(0, raw_damages)
     
@@ -77,7 +79,6 @@ class Reinforced_Skeleton(Skeletons):
 
 class armor_Skeletons(Skeletons):
     def compute_raw_damages(self, damages, roll, attacker):
-        print(f"💀 Squelettes à armure prends des dégâts ! (-6 dmg)")
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 6
         return max(0, raw_damages)
     
@@ -88,6 +89,15 @@ class armor_Skeletons(Skeletons):
 class Goblins(Character):
     def __init__ (self, name="gobelins", hp=20, attack_value=5, defense_value=5, dice=Dice("white_green", 6)):
         super().__init__(name, hp, attack_value, defense_value, dice)
+        self.name = Text(f"[green]{self.name}[/green]")
+
+    def compute_damages(self, roll, target):
+        print(f"👹 {self.name} [bold]Vous attaque ![/bold]")
+        return super().compute_damages(roll, target)
+
+    def compute_raw_damages(self, damages, roll, attacker):
+        print(f"👹 {self.name} [bold]prend des dégâts ![/bold]")
+        return super().compute_raw_damages(damages, roll, attacker)
 
     @classmethod
     def create_enemy(cls, dice):
@@ -95,11 +105,9 @@ class Goblins(Character):
 
 class big_goblins(Goblins):
     def compute_damages(self, roll, target):
-        print(f"👹 Gros gobelin vous frappe ! (+5 dmg)")
         return super().compute_damages(roll, target) + 5
     
     def compute_raw_damages(self, damages, roll, attacker):
-        print(f"👹 Gros gobelin prends des dégâts ! (-4 dmg)")
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 4
         return max(0, raw_damages)
     
@@ -111,6 +119,16 @@ class big_goblins(Goblins):
 class Trolls(Character):
     def __init__ (self, name="Trolls", hp=35, attack_value=15, defense_value=10, dice=Dice("black", 6)):
         super().__init__(name, hp, attack_value, defense_value, dice)
+        self.name = Text(f"[dark green]{self.name}[/dark green]")
+
+    def compute_damages(self, roll, target):
+        print(f"🧌 {self.name} [bold]Vous attaque ![/bold]")
+        return super().compute_damages(roll, target)
+
+    def compute_raw_damages(self, damages, roll, attacker):
+        print(f"🧌 {self.name} [bold]prend des dégâts ![/bold]")
+        return super().compute_raw_damages(damages, roll, attacker)
+
 
     @classmethod
     def create_enemy(cls, dice):
@@ -118,7 +136,7 @@ class Trolls(Character):
 
 class Olog_hai(Trolls):
     def compute_damages(self, roll, target):
-        print("🧌 Olog_hai vous attaque ! (+5 dmg)")
+        print("🧌 {self.name} [bold]Vous attaque ![/bold] (+5 dmg)")
         return super().compute_damages(roll, target) + 5
     
     @classmethod

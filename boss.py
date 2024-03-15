@@ -7,6 +7,14 @@ class Boss(Character):
     boss_killed_count = 0
     def __init__ (self, name="Boss", hp=50, attack_value=20, defense_value=20, dice=Dice("Red", 10)):
         return super().__init__(name, hp, attack_value, defense_value, dice)
+    
+    @classmethod
+    def increase_boss_killed_count(cls):
+        cls.boss_killed_count += 1
+        if cls.boss_killed_count % 5 == 0:
+            return Balrog.summon_balrog()
+        else:
+            return None
 
 class Cadaverus_Devorator(Boss): #Boss Zombie
     def compute_damages(self, roll, target):
@@ -64,14 +72,6 @@ class Garrok_le_Féroce(Boss): #troll boss
     def create_boss(cls, dice):
         return cls(name="Garrok le Féroce",dice=dice)
 
-    #@classmethod
-    #def increase_boss_killed_count(cls):
-        #cls.boss_killed_count += 1
-        #if cls.boss_killed_count % 5 == 0:
-            #return Balrog.summon_balrog()
-        #else:
-            #return None
-
 class Balrog(Character):
     def __init__ (self, name="Balrog", hp=100, attack_value=50, defense_value=50, dice=Dice("Black_red", 15)):
         return super().__init__(name, hp, attack_value, defense_value, dice)
@@ -80,3 +80,8 @@ class Balrog(Character):
     def summon_balrog(cls):
         print("Cinqs Boss sont morts ! Le Balrog apparait !")
         return cls()
+    
+    @classmethod
+    def create_mega_boss(cls, dice):
+        return cls(dice=dice)
+    
