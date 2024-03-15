@@ -84,4 +84,3 @@ class Balrog(Character):
     @classmethod
     def create_mega_boss(cls, dice):
         return cls(dice=dice)
-    

@@ -1,5 +1,7 @@
 from dice import Dice
 from rich import print
+import random
+
 class Character:
     def __init__(self, name, hp_max, attack_value, defense_value, dice) -> None:
         self.name = name
@@ -95,10 +97,17 @@ class Druid(Character):
         else:
             print(f"{self.name} n'a pas assez de mana pour lancer un sort.")
 
+    def show_manabar(self):
+        print(
+            f"[{'🔵' * self.mana}{'⚪' * (self.mana_max - self.mana)}] {self.mana}/{self.mana_max}hp")        
+
     def cast_spell(self, target):
+        mana_cost = random.randint(1, 5)  # Déterminer un coût de mana aléatoire entre 1 et 5
+
         if target in self.allies and self.mana >= 5:
             self.mana -= 5
             self.heal_ally(target)
             print(f"{self.name} [vert]lance un sort[/vert] sur {target.name} (mana: {self.mana}/{self.mana_max})")
         elif target in self.allies:
             print(f"{self.name} n'a pas assez de mana pour lancer un sort.")
+        self.show_manabar()
