@@ -28,7 +28,7 @@ class Zombie2_0(Zombie):
     
     @classmethod
     def create_enemy(cls, dice):
-        return cls(dice=dice)
+        return cls(name="Zombie Robuste" ,dice=dice)
 
 class Zombie_guerrier(Zombie):
     def compute_damages(self, roll, target):
@@ -41,7 +41,7 @@ class Zombie_guerrier(Zombie):
     
     @classmethod
     def create_enemy(cls, dice):
-        return cls(dice=dice)
+        return cls(name="Zombie Guerrier" ,dice=dice)
 
 class Skeletons(Character):
     def __init__(self, name="Squelettes", hp=20, attack_value=5, defense_value=3, dice=Dice("White", 6)):
