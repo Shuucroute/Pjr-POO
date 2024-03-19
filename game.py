@@ -51,7 +51,7 @@ def combat(player, ally, enemies):
                                 enemies.pop(ally_enemy_choice - 1)
                             else:
                                 print(f"{ally_enemy.name} counter-attacks!")
-                                player.defend(ally_enemy)
+                                player.defense(ally_enemy)
                                 if not player.is_alive():
                                     print(f"{player.name} has been defeated!")
                                     break
@@ -74,8 +74,8 @@ def combat(player, ally, enemies):
 
 def start_game():
     print("Welcome to the game!")
-    player = Player("Cloud", 100, 15, 10, Dice("black", 6), 10)
-    ally = Ally("Barret", 120, 12, 8, Dice("black", 6), 5)
+    player = Player("Cloud", 100, 15, 10, Dice( 6), 10)
+    ally = Ally("Barret", 120, 12, 8, Dice(6), 5)
     dungeons = [
         Dungeon("Dungeon 1", [
             Zombie(),
