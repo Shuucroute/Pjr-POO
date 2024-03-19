@@ -2,92 +2,75 @@ from character import Character, Warrior, Mage, Thief, Archer, Druid
 from ennemis import Zombie, Skeletons, Goblins, Trolls
 from dice import Dice
 
-class Joueur(Character):
-    def __init__(self, nom, vie, force, defense, dice, exp_reward) -> None:
-        super().__init__(nom, vie, force, defense, dice, exp_reward)
+class Player(Character):
+    def __init__(self, name, health, attack, defense, dice, exp_reward):
+        super().__init__(name, health, attack, defense, dice, exp_reward)
 
-class Allie(Character):
-    pass
+class Ally(Character):
+    def __init__(self, name, health, attack, defense, dice, exp_reward):
+        super().__init__(name, health, attack, defense, dice, exp_reward)
 
-class Donjon:
-    def __init__(self, nom, ennemis):
-        self.nom = nom
-        self.ennemis = ennemis
+class Dungeon:
+    def __init__(self, name, enemies):
+        self.name = name
+        self.enemies = enemies
 
-def combat(joueur, allie, ennemis):
-    while ennemis:
-        print("\nChoisissez une action :")
-        print("1. Attaquer")
-        print("2. Utiliser un objet")
-        print("3. Fuir")
-        choix = input("Entrez le numéro de l'action (1/2/3) : ")
+def combat(player, ally, enemies):
+    while enemies:
+        print("\nChoose an action:")
+        print("1. Attack")
+        print("2. Use item")
+        print("3. Flee")
+        choice = input("Enter the action number (1/2/3): ")
 
-        if choix == "1":
-            ennemi = ennemis[0]
-            joueur.attack(ennemi)
-            if not ennemi.is_alive():
-                print(f"{ennemi.name} a été vaincu !")
-                ennemis.pop(0)
+        if choice == "1":
+            enemy = enemies[0]
+            player.attack(enemy)
+            if not enemy.is_alive():
+                print(f"{enemy.name} has been defeated!")
+                player.gain_exp(enemy.exp_reward)
+                enemies.pop(0)
             else:
-                print(f"{ennemi.name} contre-attaque !")
-                allie.attack(joueur)
-                if not joueur.is_alive():
-                    print(f"{joueur.name} a été vaincu !")
+                print(f"{enemy.name} counter-attacks!")
+                ally.attack(player)
+                if not player.is_alive():
+                    print(f"{player.name} has been defeated!")
                     break
                 else:
-                    print(f"{joueur.name} a résisté à l'attaque de {ennemi.name} !")
-        elif choix == "2":
-            print("Aucun objet n'est disponible pour l'instant.")
-        elif choix == "3":
-            print("Vous fuyez le combat !")
+                    print(f"{player.name} resisted {enemy.name}'s attack!")
+        elif choice == "2":
+            print("No items are available at the moment.")
+        elif choice == "3":
+            print("You flee the battle!")
             break
         else:
-            print("Action invalide.")
+            print("Invalid action.")
 
 def start_game():
-    print("Bienvenue dans le jeu !")
-    joueur = Joueur("Cloud", 100, 15, 10, Dice("black", 6))
-    allie = Allie("Barret", 120, 12, 8, Dice("black", 6))
-    donjons = [
-        Donjon("Donjon 1", [
-            Zombie("Zombie", 40, 8, 2, Dice("green", 6)),
-            Zombie("Zombie", 40, 8, 2, Dice("green", 6)),
-            Zombie("Zombie", 40, 8, 2, Dice("green", 6)),
-            Zombie("Zombie", 40, 8, 2, Dice("green", 6))
+    print("Welcome to the game!")
+    player = Player("Cloud", 100, 15, 10, Dice("black", 6), 10)
+    ally = Ally("Barret", 120, 12, 8, Dice("black", 6), 5)
+    dungeons = [
+        Dungeon("Dungeon 1", [
+            Zombie("Zombie", 40, 8, 2, Dice("green", 6), 5),
+            # ...
         ]),
-        Donjon("Donjon 2", [
-            Skeletons("Squelette", 50, 10, 4, Dice("white", 6)),
-            Skeletons("Squelette", 50, 10, 4, Dice("white", 6)),
-            Skeletons("Squelette", 50, 10, 4, Dice("white", 6)),
-            Skeletons("Squelette", 50, 10, 4, Dice("white", 6))
-        ]),
-        Donjon("Donjon 3", [
-            Goblins("Gobelin", 50, 10, 5, Dice("white_green", 6)),
-            Goblins("Gobelin", 50, 10, 5, Dice("white_green", 6)),
-            Goblins("Gobelin", 50, 10, 5, Dice("white_green", 6)),
-            Goblins("Gobelin", 50, 10, 5, Dice("white_green", 6))
-        ]),
-        Donjon("Donjon 4", [
-            Trolls("Troll", 90, 20, 8, Dice("black", 6)),
-            Trolls("Troll", 90, 20, 8, Dice("black", 6)),
-            Trolls("Troll", 90, 20, 8, Dice("black", 6)),
-            Trolls("Troll", 90, 20, 8, Dice("black", 6))
-        ])
+        # ...
     ]
 
-    for donjon in donjons:
-        print(f"Vous entrez dans le {donjon.nom} !")
-        combat(joueur, allie, donjon.ennemis)
-        if not joueur.is_alive():
-            print("Vous avez été vaincu ! Fin du jeu.")
+    for dungeon in dungeons:
+        print(f"You enter the {dungeon.name}!")
+        combat(player, ally, dungeon.enemies)
+        if not player.is_alive():
+            print("You have been defeated! Game over.")
             break
-        elif not allie.is_alive():
-            print("Votre allié a été vaincu ! Fin du jeu.")
+        elif not ally.is_alive():
+            print("Your ally has been defeated! Game over.")
             break
         else:
-            print(f"Vous avez vaincu le {donjon.nom} ! Passage au donjon suivant...")
-            # Ajoutez ici la logique pour passer au donjon suivant
-            input("Appuyez sur Entrée pour continuer...")
+            print(f"You have defeated the {dungeon.name}! Moving on to the next dungeon...")
+            # Add logic here to move on to the next dungeon
+            input("Press Enter to continue...")
 
 if __name__ == "__main__":
     start_game()
