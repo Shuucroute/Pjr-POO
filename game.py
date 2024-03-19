@@ -48,11 +48,11 @@ def combat(player, ally, enemies):
 
 def start_game():
     print("Welcome to the game!")
-    player = Player("Cloud", 100, 15, 10, Dice("black", 6), 10)
-    ally = Ally("Barret", 120, 12, 8, Dice("black", 6), 5)
+    player = Player("Cloud", 100, 15, 10, Dice(6), 10)
+    ally = Ally("Barret", 120, 12, 8, Dice(6), 5)
     dungeons = [
         Dungeon("Dungeon 1", [
-            Zombie("Zombie", 40, 8, 2, Dice("green", 6), 5),
+            Zombie(),
             # ...
         ]),
         # ...

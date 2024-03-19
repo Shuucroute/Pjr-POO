@@ -6,9 +6,10 @@ from rich import print
 
 
 class Zombie(Character):
-    def __init__(self, name="Zombie", hp=20, attack_value=5, defense_value=5, dice=Dice("green", 6), exp_reward=60):
+    def __init__(self, name="Zombie", hp=20, attack_value=5, defense_value=5, dice=Dice(6), exp_reward=50):
         super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
         self.name = Text(f"[bold green]{self.name}[/bold green]")
+        print(self.exp_reward)
 
     def compute_damages(self, roll, target):
         print(f"🧟 {self.name} [bold]Vous attaque ![/bold]")
@@ -23,8 +24,8 @@ class Zombie(Character):
         player.gain_exp(self.exp_reward * num_zombie_vaincus)  # Récompense le joueur avec l'expérience appropriée
     
     @classmethod
-    def create_enemy(cls, dice):
-        return cls(dice=dice)   
+    def create_enemy(cls):
+        return cls(dice=Dice(6))   
     
 class Zombie2_0(Zombie):
     def compute_damages(self, roll, target):
@@ -34,12 +35,13 @@ class Zombie2_0(Zombie):
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 2
         return max(0, raw_damages)  # Assure que les dégâts ne peuvent pas être négatifs
     
-    def drop_exp(self):
-        return 35
+    def defeat(self, player, num_zombie2_0_vaincus):
+        super().defeat()
+        player.gain_exp(self.exp_reward * num_zombie2_0_vaincus)
     
     @classmethod
-    def create_enemy(cls, dice):
-        return cls(name="Zombie Robuste" ,dice=dice)
+    def create_enemy(cls):
+        return cls(name="Zombie Robuste" ,dice=Dice(6), exp_reward=60)
 
 class Zombie_guerrier(Zombie):
     def compute_damages(self, roll, target):
@@ -50,15 +52,16 @@ class Zombie_guerrier(Zombie):
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 5
         return max(0, raw_damages)
     
-    def drop_exp(self):
-        return 50
+    def defeat(self, player, num_zombiesGuerrier_vaincus):
+        super().defeat()
+        player.gain_exp(self.exp_reward * num_zombiesGuerrier_vaincus)
     
     @classmethod
-    def create_enemy(cls, dice):
-        return cls(name="Zombie Guerrier" ,dice=dice)
+    def create_enemy(cls):
+        return cls(name="Zombie Guerrier" ,dice=Dice(6), exp_reward=100)
 
 class Skeletons(Character):
-    def __init__(self, name="Squelettes", hp=20, attack_value=5, defense_value=3, dice=Dice("White", 6), exp_reward=60):
+    def __init__(self, name="Squelettes", hp=20, attack_value=5, defense_value=3, dice=Dice(6), exp_reward=60):
         super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
         self.name = Text(f"[dim]{self.name}[/dim]")
 
@@ -103,7 +106,7 @@ class armor_Skeletons(Skeletons):
         return cls(name="squelette à armure",dice=dice)
 
 class Goblins(Character):
-    def __init__ (self, name="gobelins", hp=20, attack_value=5, defense_value=5, dice=Dice("white_green", 6), exp_reward=90):
+    def __init__ (self, name="gobelins", hp=20, attack_value=5, defense_value=5, dice=Dice(6), exp_reward=90):
         super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
         self.name = Text(f"[green]{self.name}[/green]")
 
@@ -136,7 +139,7 @@ class big_goblins(Goblins):
         
 
 class Trolls(Character):
-    def __init__ (self, name="Trolls", hp=35, attack_value=15, defense_value=10, dice=Dice("black", 6)):
+    def __init__ (self, name="Trolls", hp=35, attack_value=15, defense_value=10, dice=Dice(6)):
         super().__init__(name, hp, attack_value, defense_value, dice)
         self.name = Text(f"[dark green]{self.name}[/dark green]")
 
@@ -169,4 +172,3 @@ class Olog_hai(Trolls):
         return cls(name="Olog hai",dice=dice)
 
 ENNEMIES = [Zombie, Zombie2_0, Zombie_guerrier, Skeletons, Reinforced_Skeleton, armor_Skeletons, Goblins, big_goblins, Trolls, Olog_hai]
-

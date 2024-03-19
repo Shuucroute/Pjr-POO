@@ -2,8 +2,7 @@ import random
 
 
 class Dice:
-    def __init__(self, color, faces):
-        self.color = color
+    def __init__(self, faces):
         self.faces = faces
         self.material = "wood"
 
