@@ -53,7 +53,6 @@ class Zombie_guerrier(Zombie):
         return max(0, raw_damages)
     
     def defeat(self, player, num_zombiesGuerrier_vaincus):
-        super().defeat()
         player.gain_exp(self.exp_reward * num_zombiesGuerrier_vaincus)
     
     @classmethod

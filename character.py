@@ -88,8 +88,6 @@ class Character:
         )
         self.decrease_hp(raw_damages)
 
-    def defeat(self):
-        print(f"{self.name} a été vaincu !")
 
 
 class Warrior(Character):
