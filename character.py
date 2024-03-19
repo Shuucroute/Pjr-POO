@@ -88,6 +88,8 @@ class Character:
         )
         self.decrease_hp(raw_damages)
 
+
+
 class Warrior(Character):
     def compute_damages(self, roll, target):
         print("🪓 Axe in your face ! (+3 dmg)")

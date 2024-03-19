@@ -1,6 +1,7 @@
 from character import Character, Warrior, Mage, Thief, Archer, Druid
 from ennemis import Zombie, Skeletons, Goblins, Trolls
 from dice import Dice
+import menu
 
 class Player(Character):
     def __init__(self, name, health, attack, defense, dice, exp_reward):
@@ -51,7 +52,7 @@ def combat(player, ally, enemies):
                                 enemies.pop(ally_enemy_choice - 1)
                             else:
                                 print(f"{ally_enemy.name} counter-attacks!")
-                                player.defense(ally_enemy)
+                                player.defense(ally_enemy.attack_value, ally_enemy)
                                 if not player.is_alive():
                                     print(f"{player.name} has been defeated!")
                                     break
@@ -72,10 +73,10 @@ def combat(player, ally, enemies):
             print("Invalid action.")
 
 
+
 def start_game():
     print("Welcome to the game!")
-    player = Player("Cloud", 100, 15, 10, Dice( 6), 10)
-    ally = Ally("Barret", 120, 12, 8, Dice(6), 5)
+    player, ally = menu.select_character()
     dungeons = [
         Dungeon("Dungeon 1", [
             Zombie(),
