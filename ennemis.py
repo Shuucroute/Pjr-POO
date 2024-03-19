@@ -58,13 +58,8 @@ class Zombie_guerrier(Zombie):
         return cls(name="Zombie Guerrier" ,dice=dice)
 
 class Skeletons(Character):
-<<<<<<< HEAD
-    def __init__(self, name="Squelettes", hp=20, attack_value=5, defense_value=3, dice=Dice("White", 6)):
-        super().__init__(name, hp, attack_value, defense_value, dice)
-=======
     def __init__(self, name="Squelettes", hp=20, attack_value=5, defense_value=3, dice=Dice("White", 6), exp_reward=60):
         super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
->>>>>>> 68927d5c89da87f54ad73a4880f8cde11aae33eb
         self.name = Text(f"[dim]{self.name}[/dim]")
 
     def compute_damages(self, roll, target):
@@ -173,26 +168,5 @@ class Olog_hai(Trolls):
     def create_enemy(cls, dice):
         return cls(name="Olog hai",dice=dice)
 
-<<<<<<< HEAD
-
-class Renegas(Character):
-    pass
-
-ENNEMIES = [Zombie, Zombie2_0, Zombie_guerrier, Skeletons, Reinforced_Skeleton, armor_Skeletons, Goblins, big_goblins, Trolls, Olog_hai]
-=======
 ENNEMIES = [Zombie, Zombie2_0, Zombie_guerrier, Skeletons, Reinforced_Skeleton, armor_Skeletons, Goblins, big_goblins, Trolls, Olog_hai]
 
-char1 = Character("Jean-michmich", 50, 30, 10, dice=Dice("Blue", 6), exp_reward=1)
-char2 = Zombie()
-char3 = Zombie()
-char4 = Zombie()
-char5 = Zombie()
-char6 = Zombie()
-
-while char1.is_alive() and char2.is_alive() and char3.is_alive() and char4.is_alive() and char5.is_alive() and char6.is_alive():
-    char1.attack(char2)
-    char1.attack(char3)
-    char1.attack(char4)
-    char1.attack(char5)
-    char1.attack(char6)
->>>>>>> 68927d5c89da87f54ad73a4880f8cde11aae33eb
