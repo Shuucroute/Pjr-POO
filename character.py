@@ -20,18 +20,27 @@ class Character:
         self.check_level_up()  # Vérifie si le personnage monte de niveau
 
     def check_level_up(self):
-        level_thresholds = {level: 100 * (2 ** (level - 1)) for level in range(1, 51)}
-        next_level_exp = level_thresholds.get(self.level + 1, float('inf'))  # EXP nécessaire pour atteindre le prochain niveau
-        if self.exp >= next_level_exp:
+        exp_threshold = 50 * self.level  # Seuil d'expérience pour passer au niveau suivant
+        if self.exp >= exp_threshold:
             self.level += 1
             print(f"{self.name} a atteint le niveau {self.level} !")
-            self.exp -= next_level_exp  # Retire l'excès d'EXP au-delà du prochain niveau
+            self.exp -= exp_threshold  # Retire l'excès d'EXP pour le prochain niveau
 
             # Exemple : Augmente les statistiques lors du passage de niveau
             self.hp_max += 10
             self.hp = self.hp_max
             self.attack_value += 2
             self.defense_value += 1
+            self.update_exp_reward()  # Met à jour la récompense en expérience pour le prochain niveau
+
+    def update_exp_reward(self):
+        self.exp_reward += 1  # Exemple de mise à jour de la récompense en expérience pour le prochain niveau
+
+    def show_expbar(self):
+        filled_exp = min(self.exp, 50 * self.level)
+        empty_exp = 50 * self.level - filled_exp
+        print(f"[{'🟢' * filled_exp}{'⚫' * empty_exp}] {self.exp}/{50 * self.level} EXP")
+
 
     def __str__(self) -> str:
         return f"""I'm {self.name}. Those are my caracs :

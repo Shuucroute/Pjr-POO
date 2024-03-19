@@ -6,7 +6,7 @@ from dice import Dice
 player = Character("Nom du personnage", 100, 30, 5, dice=Dice("Blue", 6), exp_reward=1)
 
 # Création d'une liste d'ennemis
-zombies = [Zombie() for _ in range(2)]  # Crée 5 zombies
+zombies = [Zombie() for _ in range(1)] 
 
 # Combat contre les zombies
 for zombie in zombies:
@@ -15,16 +15,19 @@ for zombie in zombies:
         if zombie.is_alive():
             zombie.attack(player)
 
-        # Vérifie si le joueur est vivant après chaque attaque
+
+        player.show_healthbar()
+        player.show_expbar()
+
+
         if not player.is_alive():
             print("Le joueur est mort!")
             break
-        # Vérifie si le zombie est mort après chaque attaque
+
         elif not zombie.is_alive():
             print("Le zombie est mort!")
-            zombie.defeat(player, len(zombies))  # Passe l'instance du joueur comme argument
+            zombie.defeat(player, len(zombies))  
             break
 
 
-# Affiche les statistiques du joueur après les combats
-print(player)
+print (player)
