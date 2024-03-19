@@ -1,8 +1,6 @@
 from character import Character
 from dice import Dice 
-from rich import print
-from rich.console import Console
-from rich.text import Text
+
 
 
 class Zombie(Character):

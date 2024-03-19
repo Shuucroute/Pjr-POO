@@ -1,5 +1,4 @@
 from dice import Dice
-from rich import print
 import random
 
 class Character:
