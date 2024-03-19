@@ -52,7 +52,10 @@ def start_game():
     ally = Ally("Barret", 120, 12, 8, Dice("black", 6), 5)
     dungeons = [
         Dungeon("Dungeon 1", [
-            Zombie("Zombie", 40, 8, 2, Dice("green", 6), 5),
+            Zombie(),
+            Zombie(),
+            Zombie(),
+            Zombie(),
             # ...
         ]),
         # ...
