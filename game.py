@@ -37,12 +37,30 @@ def combat(player, ally, enemies):
                     enemies.pop(enemy_choice - 1)
                 else:
                     print(f"{enemy.name} counter-attacks!")
-                    ally.attack(player)
-                    if not player.is_alive():
-                        print(f"{player.name} has been defeated!")
-                        break
+                    if ally:
+                        print("\nChoose an enemy for your ally to attack:")
+                        for i, enemy in enumerate(enemies, 1):
+                            print(f"{i}. {enemy.name}")
+                        ally_enemy_choice = int(input("Enter the enemy number: "))
+                        if 1 <= ally_enemy_choice <= len(enemies):
+                            ally_enemy = enemies[ally_enemy_choice - 1]
+                            ally.attack(ally_enemy)
+                            if not ally_enemy.is_alive():
+                                print(f"{ally_enemy.name} has been defeated!")
+                                ally.gain_exp(ally_enemy.exp_reward)
+                                enemies.pop(ally_enemy_choice - 1)
+                            else:
+                                print(f"{ally_enemy.name} counter-attacks!")
+                                player.defend(ally_enemy)
+                                if not player.is_alive():
+                                    print(f"{player.name} has been defeated!")
+                                    break
+                                else:
+                                    print(f"{player.name} resisted {ally_enemy.name}'s attack!")
+                        else:
+                            print("Invalid enemy number.")
                     else:
-                        print(f"{player.name} resisted {enemy.name}'s attack!")
+                        print("You have no ally.")
             else:
                 print("Invalid enemy number.")
         elif choice == "2":
@@ -53,13 +71,13 @@ def combat(player, ally, enemies):
         else:
             print("Invalid action.")
 
+
 def start_game():
     print("Welcome to the game!")
     player = Player("Cloud", 100, 15, 10, Dice("black", 6), 10)
     ally = Ally("Barret", 120, 12, 8, Dice("black", 6), 5)
     dungeons = [
         Dungeon("Dungeon 1", [
-            Zombie(),
             Zombie(),
             Zombie(),
             Zombie(),

@@ -88,14 +88,14 @@ def choose_ally(character_class):
             return None
         elif choice == "1":
             print("Vous avez choisi d'avoir un allié Archer.")
-            return character.Archer("Ally", 100, 10, 5)
+            return character.Archer("Ally")
         elif choice == "2":
             print("Vous avez choisi d'avoir un allié Druid.")
             # Ajoutez un argument supplémentaire 'healing_value'
             return character.Druid("Ally", 120, 8, 6, 20, random.randint(1, 5), random.randint(1, 5))
         elif choice == "3":
             print("Vous avez choisi d'avoir un allié Thief.")
-            return character.Thief("Ally", 80, 12, 4)
+            return character.Thief("Ally")
         elif choice == "4":
             print("Vous avez choisi d'avoir un allié Warrior.")
             return character.Warrior("Ally", 150, 6, 8)
