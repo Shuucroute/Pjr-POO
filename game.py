@@ -3,8 +3,8 @@ from ennemis import Zombie, Skeletons, Goblins, Trolls
 from dice import Dice
 
 class Joueur(Character):
-    def __init__(self, nom, vie, force, defense, dice) -> None:
-        super().__init__(nom, vie, force, defense, dice)
+    def __init__(self, nom, vie, force, defense, dice, exp_reward) -> None:
+        super().__init__(nom, vie, force, defense, dice, exp_reward)
 
 class Allie(Character):
     pass
