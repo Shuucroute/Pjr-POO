@@ -1,15 +1,37 @@
 from dice import Dice
-from rich import print
 import random
+from rich import print
 
 class Character:
-    def __init__(self, name, hp_max, attack_value, defense_value, dice) -> None:
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward) -> None:
         self.name = name
         self.hp_max = hp_max
         self.hp = hp_max
         self.attack_value = attack_value
         self.defense_value = defense_value
         self.dice = dice
+        self.exp = 0  # Points d'expérience
+        self.level = 1  # Niveau
+        self.exp_reward = exp_reward
+
+    def gain_exp(self, amount):
+        self.exp += amount
+        print(f"{self.name} a gagné {amount} points d'expérience.")
+        self.check_level_up()  # Vérifie si le personnage monte de niveau
+
+    def check_level_up(self):
+        level_thresholds = {level: 100 * (2 ** (level - 1)) for level in range(1, 51)}
+        next_level_exp = level_thresholds.get(self.level + 1, float('inf'))  # EXP nécessaire pour atteindre le prochain niveau
+        if self.exp >= next_level_exp:
+            self.level += 1
+            print(f"{self.name} a atteint le niveau {self.level} !")
+            self.exp -= next_level_exp  # Retire l'excès d'EXP au-delà du prochain niveau
+
+            # Exemple : Augmente les statistiques lors du passage de niveau
+            self.hp_max += 10
+            self.hp = self.hp_max
+            self.attack_value += 2
+            self.defense_value += 1
 
     def __str__(self) -> str:
         return f"""I'm {self.name}. Those are my caracs :
@@ -56,6 +78,9 @@ class Character:
             f"{self.name} [blue]defend[/blue] againt {damages} and took {raw_damages} damages ({damages} - def: {self.defense_value} - roll: {roll})"
         )
         self.decrease_hp(raw_damages)
+
+    def defeat(self):
+        print(f"{self.name} a été vaincu !")
 
 
 class Warrior(Character):
