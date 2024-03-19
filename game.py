@@ -24,20 +24,27 @@ def combat(player, ally, enemies):
         choice = input("Enter the action number (1/2/3): ")
 
         if choice == "1":
-            enemy = enemies[0]
-            player.attack(enemy)
-            if not enemy.is_alive():
-                print(f"{enemy.name} has been defeated!")
-                player.gain_exp(enemy.exp_reward)
-                enemies.pop(0)
-            else:
-                print(f"{enemy.name} counter-attacks!")
-                ally.attack(player)
-                if not player.is_alive():
-                    print(f"{player.name} has been defeated!")
-                    break
+            print("\nChoose an enemy to attack:")
+            for i, enemy in enumerate(enemies, 1):
+                print(f"{i}. {enemy.name}")
+            enemy_choice = int(input("Enter the enemy number: "))
+            if 1 <= enemy_choice <= len(enemies):
+                enemy = enemies[enemy_choice - 1]
+                player.attack(enemy)
+                if not enemy.is_alive():
+                    print(f"{enemy.name} has been defeated!")
+                    player.gain_exp(enemy.exp_reward)
+                    enemies.pop(enemy_choice - 1)
                 else:
-                    print(f"{player.name} resisted {enemy.name}'s attack!")
+                    print(f"{enemy.name} counter-attacks!")
+                    ally.attack(player)
+                    if not player.is_alive():
+                        print(f"{player.name} has been defeated!")
+                        break
+                    else:
+                        print(f"{player.name} resisted {enemy.name}'s attack!")
+            else:
+                print("Invalid enemy number.")
         elif choice == "2":
             print("No items are available at the moment.")
         elif choice == "3":
