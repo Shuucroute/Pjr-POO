@@ -50,7 +50,7 @@ class Zombie_guerrier(Zombie):
 class Skeletons(Character):
     def __init__(self, name="Squelettes", hp=20, attack_value=5, defense_value=3, dice=Dice("White", 6)):
         super().__init__(name, hp, attack_value, defense_value, dice)
-        self.name = Text(f"[bold white]{self.name}[/ bold white]")
+        self.name = Text(f"[dim]{self.name}[/dim]")
 
     def compute_damages(self, roll, target):
         print(f"💀 {self.name} [bold]Vous attaque ![/bold] (+3 dmg)")
