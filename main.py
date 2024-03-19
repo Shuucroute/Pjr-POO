@@ -12,8 +12,4 @@ if player is None:
     print("Aucun personnage n'a été sélectionné.")
     exit()
 
-# Créer une instance de la classe Game
-game_instance = game.Game()
-
-# Lancer le premier donjon avec le personnage sélectionné
-game_instance.start_dungeon(player, ally)
+game.start_game()
