@@ -20,7 +20,6 @@ class Zombie(Character):
         return super().compute_raw_damages(damages, roll, attacker)
     
     def defeat(self, player, num_zombie_vaincus):
-        super().defeat()  # Appel de la méthode de la classe parente pour gérer la défaite du Zombie
         player.gain_exp(self.exp_reward * num_zombie_vaincus)  # Récompense le joueur avec l'expérience appropriée
     
     @classmethod
@@ -36,7 +35,6 @@ class Zombie2_0(Zombie):
         return max(0, raw_damages)  # Assure que les dégâts ne peuvent pas être négatifs
     
     def defeat(self, player, num_zombie2_0_vaincus):
-        super().defeat()
         player.gain_exp(self.exp_reward * num_zombie2_0_vaincus)
     
     @classmethod
