@@ -19,14 +19,8 @@ def select_character():
         if choice == "1":
             name = input("Entrez le nom de votre personnage : ")
             character_class = choose_character_class()
-<<<<<<< HEAD
-            recruit_ally = input("Voulez-vous recruter un allié? (oui/non) : ").lower()
-            print("Recrutement d'allié:", recruit_ally)
-            if recruit_ally == "oui":
-=======
             recruit_ally = input("Voulez-vous recruter un allié? (o/n) : ").lower()
             if recruit_ally == "o":
->>>>>>> 68927d5c89da87f54ad73a4880f8cde11aae33eb
                 ally = choose_ally(character_class)
             else:
                 ally = None
@@ -41,7 +35,7 @@ def select_character():
             sys.exit()
         else:
             print("Choix invalide.")
-    print("Fin de la sélection du personnage.")   
+    print("Fin de la sélection du personnage.")
     return player, ally
 
 def choose_character_class():
@@ -88,37 +82,6 @@ def choose_ally(character_class):
     print("0. Ne pas recruter d'allié")
 
     while True:
-        choice = int(input("Entrez le numéro correspondant à la classe de votre allié : "))
-        if choice == 0:
-            print("Vous avez choisi de ne pas recruter d'allié.")
-            return None
-        elif choice == 1:
-            print("Vous avez choisi d'avoir un allié Archer.")
-            return character.Archer("Ally", 100, 10, 5,Dice(color="green",faces=6))
-        elif choice == 2:
-            print("Vous avez choisi d'avoir un allié Druid.")
-            return character.Druid("Ally", 120, 8, 6, 20, random.randint(1, 5))
-        elif choice == 3:
-            print("Vous avez choisi d'avoir un allié Thief.")
-            return character.Thief("Ally", 80, 12, 4,Dice(color="green",faces=6))
-        elif choice == 4:
-            print("Vous avez choisi d'avoir un allié Warrior.")
-            return character.Warrior("Ally", 150, 6, 8,Dice(color="green",faces=6))
-        elif choice == 5:
-            print("Vous avez choisi d'avoir un allié Mage.")
-            return character.Mage("Ally", 80, 15, 3,Dice(color="green",faces=6))
-        else:
-            print("Choix invalide.")
-def choose_ally(character_class):
-    print("Choisissez un allié avec des caractéristiques similaires à votre classe principale :")
-    print("1. Archer")
-    print("2. Druid")
-    print("3. Thief")
-    print("4. Warrior")
-    print("5. Mage")
-    print("0. Ne pas recruter d'allié")
-
-    while True:
         choice = input("Entrez le numéro correspondant à la classe de votre allié : ")
         if choice == "0":
             print("Vous avez choisi de ne pas recruter d'allié.")
@@ -141,11 +104,8 @@ def choose_ally(character_class):
             return character.Mage("Ally", 80, 15, 3)
         else:
             print("Choix invalide.")
-<<<<<<< HEAD
 
 if __name__ == "__main__":
-    print("Début du script...")  
+    print("Début du script...")
     player, ally = select_character()
     print("Fin du script...")
-=======
->>>>>>> 68927d5c89da87f54ad73a4880f8cde11aae33eb
