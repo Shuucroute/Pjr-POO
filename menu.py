@@ -15,6 +15,7 @@ def select_character():
     show_main_menu()
     while True:
         choice = input("Entrez votre choix : ")
+        print("Vous avez choisi l'option:", choice)
         if choice == "1":
             name = input("Entrez le nom de votre personnage : ")
             character_class = choose_character_class()
@@ -25,16 +26,16 @@ def select_character():
                 ally = None
                 print("Vous avez choisi de ne pas recruter d'allié.")
             player = create_main_character(name, character_class)
+            print("Personnage principal créé avec succès !")
             break
         elif choice == "2":
             print("Chargement d'une partie...")
-            # Ajouter la logique de chargement de la partie ici
         elif choice == "3":
             print("Au revoir !")
             sys.exit()
         else:
             print("Choix invalide.")
-
+    print("Fin de la sélection du personnage.")
     return player, ally
 
 def choose_character_class():
@@ -134,3 +135,8 @@ def choose_ally(character_class):
             return character.Mage("Ally", 80, 15, 3)
         else:
             print("Choix invalide.")
+
+if __name__ == "__main__":
+    print("Début du script...")
+    player, ally = select_character()
+    print("Fin du script...")

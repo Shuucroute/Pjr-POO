@@ -23,12 +23,11 @@ class RiggedDice(Dice):
     def roll(self):
         return self.faces
 
+    #a_dice = Dice("blue", 6)
+    #print(a_dice.roll())
 
-# a_dice = Dice("blue", 6)
-# print(a_dice.roll())
+    #a_second_dice = Dice("blue", 6)
+    #print(a_second_dice.roll())
 
-# a_second_dice = Dice("blue", 6)
-# print(a_second_dice.roll())
-
-# print(a_dice)
-# print(a_dice == a_second_dice)
+    #print(a_dice)
+    #print(a_dice == a_second_dice)
