@@ -74,9 +74,8 @@ def combat(player, ally, enemies):
 
 
 
-def start_game():
+def start_game(player,ally):
     print("Welcome to the game!")
-    player, ally = menu.select_character()
     dungeons = [
         Dungeon("Dungeon 1", [
             Zombie(),

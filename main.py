@@ -1,9 +1,6 @@
 import menu
 import game
 
-# Créer une instance de dé
-# dice = Dice(color="black", faces=6) # Cette ligne n'est pas nécessaire car vous n'utilisez pas Dice dans le main
-
 # Afficher le menu principal et choisir un personnage
 player, ally = menu.select_character()
 
@@ -12,4 +9,5 @@ if player is None:
     print("Aucun personnage n'a été sélectionné.")
     exit()
 
-game.start_game()
+# Lancer le jeu avec le personnage et l'allié sélectionnés
+game.start_game(player,ally)
