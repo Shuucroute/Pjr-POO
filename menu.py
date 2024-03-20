@@ -87,7 +87,7 @@ def choose_ally(character_class):
             return character.Archer("Ally", 100, 10, 5,Dice(6), exp_reward=1)
         elif choice == 2:
             print("Vous avez choisi d'avoir un allié Druid.")
-            return character.Druid("Ally", 120, 8, 6, 20, random.randint(1, 5), exp_reward=1)
+            return character.Druid("Ally", 120, 8, 6, 20, Dice(6), 1, 5)
         elif choice == 3:
             print("Vous avez choisi d'avoir un allié Thief.")
             return character.Thief("Ally", 80, 12, 4,Dice(6), exp_reward=1)

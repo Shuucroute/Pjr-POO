@@ -21,8 +21,9 @@ def combat(player, ally, enemies):
         print("\nChoose an action:")
         print("1. Attack")
         print("2. Use item")
-        print("3. Flee")
-        choice = input("Enter the action number (1/2/3): ")
+        print("3. Ask ally to heal (Druid only)")
+        print("4. Flee")
+        choice = input("Enter the action number (1/2/3/4): ")
 
         if choice == "1":
             print("\nChoose an enemy to attack:")
@@ -67,10 +68,37 @@ def combat(player, ally, enemies):
         elif choice == "2":
             print("No items are available at the moment.")
         elif choice == "3":
+            if isinstance(ally, Druid):
+                if ally.mana >= 0:
+                    ally.heal_ally(player)
+                else:
+                    print("Your ally doesn't have enough mana to heal you.")
+            else:
+                print("Your ally can't heal you.")
+        elif choice == "4":
             print("You flee the battle!")
             break
         else:
             print("Invalid action.")
+
+        # Vérifier si les ennemis sont toujours en vie
+        if not enemies:
+            print("You have defeated all enemies!")
+            break
+
+        # Le Druid lance un sort sur le joueur pour le soigner
+        if isinstance(ally, Druid) and ally.mana >= ally.get_mana_max():
+            ally.heal_ally(player)
+
+        # Afficher la barre de mana du Druid
+        if isinstance(ally, Druid):
+            ally.show_manabar()
+
+        # Vérifier si les ennemis sont toujours en vie
+        if not enemies:
+            print("You have defeated all enemies!")
+            break
+
 
 
 
@@ -85,6 +113,7 @@ def start_game(player,ally):
         ]),
         # ...
     ]
+    
 
     for dungeon in dungeons:
         print(f"You enter the {dungeon.name}!")

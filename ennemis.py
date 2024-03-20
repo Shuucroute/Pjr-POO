@@ -6,7 +6,7 @@ from rich import print
 
 
 class Zombie(Character):
-    def __init__(self, name="Zombie", hp=20, attack_value=5, defense_value=5, dice=Dice(6), exp_reward=50):
+    def __init__(self, name="Zombie", hp=20, attack_value=20, defense_value=5, dice=Dice(6), exp_reward=50):
         super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
         self.name = Text(f"[bold green]{self.name}[/bold green]")
         print(self.exp_reward)
