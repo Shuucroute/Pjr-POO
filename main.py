@@ -12,4 +12,6 @@ if player is None:
     print("Aucun personnage n'a été sélectionné.")
     exit()
 
+    
+
 game.start_game()
