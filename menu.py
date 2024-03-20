@@ -62,16 +62,47 @@ def choose_character_class():
 
 def create_main_character(name, character_class):
     if character_class == "archer":
-        return character.Archer(name, 100, 10, 5,Dice(color="green",faces=6), exp_reward=1)
+        return character.Archer(name, 100, 10, 5,Dice(6), exp_reward=1)
     elif character_class == "druid":
         return character.Druid(name, 120, 8, 6, 20, random.randint(1, 5), exp_reward=1)
     elif character_class == "thief":
-        return character.Thief(name, 80, 12, 4,Dice(color="green",faces=6), exp_reward=1)
+        return character.Thief(name, 80, 12, 4,Dice(6), exp_reward=1)
     elif character_class == "warrior":
-        return character.Warrior(name, 150, 6, 8,Dice(color="green",faces=6), exp_reward=1)
+        return character.Warrior(name, 150, 6, 8,Dice(6), exp_reward=1)
     elif character_class == "mage":
-        return character.Mage(name, 80, 15, 3,Dice(color="green",faces=6), exp_reward=1)
+        return character.Mage(name, 80, 15, 3,Dice(6), exp_reward=1)
 
+def choose_ally(character_class):
+    print("Choisissez un allié avec des caractéristiques similaires à votre classe principale :")
+    print("1. Archer")
+    print("2. Druid")
+    print("3. Thief")
+    print("4. Warrior")
+    print("5. Mage")
+    print("0. Ne pas recruter d'allié")
+
+    while True:
+        choice = int(input("Entrez le numéro correspondant à la classe de votre allié : "))
+        if choice == 0:
+            print("Vous avez choisi de ne pas recruter d'allié.")
+            return None
+        elif choice == 1:
+            print("Vous avez choisi d'avoir un allié Archer.")
+            return character.Archer("Ally", 100, 10, 5,Dice(6))
+        elif choice == 2:
+            print("Vous avez choisi d'avoir un allié Druid.")
+            return character.Druid("Ally", 120, 8, 6, 20, random.randint(1, 5))
+        elif choice == 3:
+            print("Vous avez choisi d'avoir un allié Thief.")
+            return character.Thief("Ally", 80, 12, 4,Dice(6))
+        elif choice == 4:
+            print("Vous avez choisi d'avoir un allié Warrior.")
+            return character.Warrior("Ally", 150, 6, 8,Dice(6))
+        elif choice == 5:
+            print("Vous avez choisi d'avoir un allié Mage.")
+            return character.Mage("Ally", 80, 15, 3,Dice(6))
+        else:
+            print("Choix invalide.")
 def choose_ally(character_class):
     print("Choisissez un allié avec des caractéristiques similaires à votre classe principale :")
     print("1. Archer")
@@ -88,14 +119,14 @@ def choose_ally(character_class):
             return None
         elif choice == "1":
             print("Vous avez choisi d'avoir un allié Archer.")
-            return character.Archer("Ally", 100, 10, 5)
+            return character.Archer("Ally")
         elif choice == "2":
             print("Vous avez choisi d'avoir un allié Druid.")
             # Ajoutez un argument supplémentaire 'healing_value'
             return character.Druid("Ally", 120, 8, 6, 20, random.randint(1, 5), random.randint(1, 5))
         elif choice == "3":
             print("Vous avez choisi d'avoir un allié Thief.")
-            return character.Thief("Ally", 80, 12, 4)
+            return character.Thief("Ally")
         elif choice == "4":
             print("Vous avez choisi d'avoir un allié Warrior.")
             return character.Warrior("Ally", 150, 6, 8)

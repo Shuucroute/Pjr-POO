@@ -1,6 +1,7 @@
 from character import Character, Warrior, Mage, Thief, Archer, Druid
 from ennemis import Zombie, Skeletons, Goblins, Trolls
 from dice import Dice
+import menu
 
 class Player(Character):
     def __init__(self, name, health, attack, defense, dice, exp_reward):
@@ -24,20 +25,45 @@ def combat(player, ally, enemies):
         choice = input("Enter the action number (1/2/3): ")
 
         if choice == "1":
-            enemy = enemies[0]
-            player.attack(enemy)
-            if not enemy.is_alive():
-                print(f"{enemy.name} has been defeated!")
-                player.gain_exp(enemy.exp_reward)
-                enemies.pop(0)
-            else:
-                print(f"{enemy.name} counter-attacks!")
-                ally.attack(player)
-                if not player.is_alive():
-                    print(f"{player.name} has been defeated!")
-                    break
+            print("\nChoose an enemy to attack:")
+            for i, enemy in enumerate(enemies, 1):
+                print(f"{i}. {enemy.name}")
+            enemy_choice = int(input("Enter the enemy number: "))
+            if 1 <= enemy_choice <= len(enemies):
+                enemy = enemies[enemy_choice - 1]
+                player.attack(enemy)
+                if not enemy.is_alive():
+                    print(f"{enemy.name} has been defeated!")
+                    player.gain_exp(enemy.exp_reward)
+                    enemies.pop(enemy_choice - 1)
                 else:
-                    print(f"{player.name} resisted {enemy.name}'s attack!")
+                    print(f"{enemy.name} counter-attacks!")
+                    if ally:
+                        print("\nChoose an enemy for your ally to attack:")
+                        for i, enemy in enumerate(enemies, 1):
+                            print(f"{i}. {enemy.name}")
+                        ally_enemy_choice = int(input("Enter the enemy number: "))
+                        if 1 <= ally_enemy_choice <= len(enemies):
+                            ally_enemy = enemies[ally_enemy_choice - 1]
+                            ally.attack(ally_enemy)
+                            if not ally_enemy.is_alive():
+                                print(f"{ally_enemy.name} has been defeated!")
+                                ally.gain_exp(ally_enemy.exp_reward)
+                                enemies.pop(ally_enemy_choice - 1)
+                            else:
+                                print(f"{ally_enemy.name} counter-attacks!")
+                                player.defense(ally_enemy.attack_value, ally_enemy)
+                                if not player.is_alive():
+                                    print(f"{player.name} has been defeated!")
+                                    break
+                                else:
+                                    print(f"{player.name} resisted {ally_enemy.name}'s attack!")
+                        else:
+                            print("Invalid enemy number.")
+                    else:
+                        print("You have no ally.")
+            else:
+                print("Invalid enemy number.")
         elif choice == "2":
             print("No items are available at the moment.")
         elif choice == "3":
@@ -46,13 +72,13 @@ def combat(player, ally, enemies):
         else:
             print("Invalid action.")
 
+
+
 def start_game():
     print("Welcome to the game!")
-    player = Player("Cloud", 100, 15, 10, Dice("black", 6), 10)
-    ally = Ally("Barret", 120, 12, 8, Dice("black", 6), 5)
+    player, ally = menu.select_character()
     dungeons = [
         Dungeon("Dungeon 1", [
-            Zombie(),
             Zombie(),
             Zombie(),
             Zombie(),

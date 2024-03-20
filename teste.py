@@ -1,12 +1,12 @@
 from character import Character
-from ennemis import Zombie
+from ennemis import Zombie_guerrier
 from dice import Dice
 
 # Création d'une instance de joueur
-player = Character("Nom du personnage", 100, 30, 5, dice=Dice("Blue", 6), exp_reward=1)
+player = Character("Nom du personnage", 100, 30, 5, dice=Dice(6), exp_reward=1)
 
 # Création d'une liste d'ennemis
-zombies = [Zombie() for _ in range(1)] 
+zombies = [Zombie_guerrier.create_enemy() for _ in range(1)] 
 
 # Combat contre les zombies
 for zombie in zombies:
