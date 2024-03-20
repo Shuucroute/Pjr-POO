@@ -129,7 +129,7 @@ class Druid(Character):
         return self.mana_max
 
     def heal_ally(self, target : Character):
-        if target in self.allies and self.mana >= self.get_mana_max():
+        if target in self.allies and self.mana >= self.mana_cost():
             heal_amount = min(self.healing_value, target.hp_max - target.hp)
             target.increase_hp(heal_amount)
             print(f"{self.name} [green]soigne[/green] {target.name} de {self.healing_value} pv (mana: {self.mana}/{self.mana_max})")
@@ -141,9 +141,12 @@ class Druid(Character):
         print(
             f"[{'🔵' * self.mana}{'⚪' * (self.mana_max - self.mana)}] {self.mana}/{self.mana_max}mana")
 
+    def mana_cost(self):
+        return random.randint(1,5)
+    
     def cast_spell(self, target):
         self.show_manabar()
-        mana_cost = random.randint(1, self.mana_max)  # Déterminer un coût de mana aléatoire entre 1 et self.mana_max
+        mana_cost = self.mana_cost()  # Déterminer un coût de mana aléatoire entre 1 et self.mana_max
         if target in self.allies and self.mana >= mana_cost:
             self.mana -= mana_cost
             self.heal_ally(target)

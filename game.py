@@ -102,17 +102,44 @@ def combat(player, ally, enemies):
 
 
 
-def start_game(player,ally):
-    print("Welcome to the game!")
-    dungeons = [
-        Dungeon("Dungeon 1", [
+def start_game(player, ally):
+    print("Bienvenue dans le jeu !")
+    dungeons = []
+    dungeons.append(
+        Dungeon("Donjon 1", [
             Zombie(),
             Zombie(),
             Zombie(),
             # ...
-        ]),
-        # ...
-    ]
+        ]))
+    dungeons.append(
+        Dungeon("Donjon 2", [
+            Zombie(),
+            Zombie(),
+            Zombie(),
+            # ...
+        ]))
+    dungeons.append(
+        Dungeon("Donjon 3", [
+            Zombie(),
+            Zombie(),
+            Zombie(),
+            # ...
+        ]))
+    dungeons.append(
+        Dungeon("Donjon 4", [
+            Zombie(),
+            Zombie(),
+            Zombie(),
+            # ...
+        ]))
+    dungeons.append(
+        Dungeon("Donjon 5", [
+            Zombie(),
+            Zombie(),
+            Zombie(),
+            # ...
+        ]))
     
 
     for dungeon in dungeons:
