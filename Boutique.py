@@ -1,4 +1,5 @@
-from objet import 
+from objet import *
+
 class Player:
     def __init__(self, name, coins):
         self.name = name
@@ -17,49 +18,23 @@ if __name__ == "__main__":
         James = Player("James", 100)
         Lisa = Player("Lisa", 150)
 
-        # Création des objets (Bouclier - Epée - Armure - Baton Magique - Dague - Arc - Cape)
-
-        #Bouclier
-        wooden_shield = WoodenShield()
-        bone_shield = BoneShield()
-        iron_shield = IronShield()
-        cooper_shield = CooperShield()
-
-        #Epée
-        wooden_sword = WoodenSword()
-        iron_sword = IronSword()
-        diamond_sword = DiamondSword()
-        excalibur = Excalibur()
-
-        #Armure
-        leather_armor = LeatherArmor()
-        iron_armor = IronArmor()
-        chainmail = Chainmail()
-        endium_armor = EndimuAmor()
-
-        #Baton Magique
-        fire_stick = FireStick()
-        ice_stick = IceStick()
-        wind_stick = WindStick()
-        ultimate_stick = UltimateStick()
-
-        #Dague
-        wooden_dagger = WoodenDagger()
-        silver_dagger = SilverDagger()
-        coper_dagger = CoperDagger()
-        gold_dagger = GoldDagger()
-
-        #Arc
-        classic_arc = ClassicArc()
-        long_arc = LongArc()
-        arbalète = Arbalète()
-        triplearc = TripleArc()
         
-        #Cape
-        mana_cape = ManaCape()
-        heal_cape = HealCape()
-        defense_cape = DefenseCape()
-        utlimate_cape = UltimateCape()
+        # Création des objets (Bouclier - Epée - Armure - Baton Magique - Dague - Arc - Cape)
+        objects = [
+            WoodenShield(), BoneShield(), IronShield(), CooperShield(),
+            WoodenSword(), IronSword(), DiamondSword(), Excalibur(),
+            LeatherArmor(), IronArmor(), Chainmail(), EndiumArmor(),
+            FireStick(), IceStick(), WindStick(), UltimateStick(),
+            WoodenDagger(), SilverDagger(), CoperDagger(), GoldDagger(),
+            ClassicArc(), LongArc(), Arbalète(), TripleArc(),
+            ManaCape(), HealCape(), DefenseCape(), UltimateCape()
+        ]
+
+        #Achat des objets
+        for item in objects:
+             James.buy_item(item)
+             Lisa.buy_item(item)
+        
 
 
 
