@@ -68,9 +68,10 @@ def combat(player, ally, enemies):
         elif choice == "2":
             print("No items are available at the moment.")
         elif choice == "3":
-            if isinstance(ally, Druid):
+            print(ally.__class__.__name__)
+            if ally.__class__.__name__ == Druid :
                 if ally.mana >= 0:
-                    ally.heal_ally(player)
+                    ally.cast_spell(player)
                 else:
                     print("Your ally doesn't have enough mana to heal you.")
             else:
@@ -88,7 +89,7 @@ def combat(player, ally, enemies):
 
         # Le Druid lance un sort sur le joueur pour le soigner
         if isinstance(ally, Druid) and ally.mana >= ally.get_mana_max():
-            ally.heal_ally(player)
+            ally.cast_spell(player)
 
         # Afficher la barre de mana du Druid
         if isinstance(ally, Druid):

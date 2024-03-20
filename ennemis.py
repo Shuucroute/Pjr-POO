@@ -19,7 +19,7 @@ class Zombie(Character):
         print(f"🧟 {self.name} [bold]prend des dégâts ![/bold]")
         return super().compute_raw_damages(damages, roll, attacker)
     
-    def defeat(self, player, num_zombie_vaincus):
+    def defeat(self, player : Character, num_zombie_vaincus):
         player.gain_exp(self.exp_reward * num_zombie_vaincus)  # Récompense le joueur avec l'expérience appropriée
     
     @classmethod
@@ -34,7 +34,7 @@ class Zombie2_0(Zombie):
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 2
         return max(0, raw_damages)  # Assure que les dégâts ne peuvent pas être négatifs
     
-    def defeat(self, player, num_zombie2_0_vaincus):
+    def defeat(self, player : Character, num_zombie2_0_vaincus):
         player.gain_exp(self.exp_reward * num_zombie2_0_vaincus)
     
     @classmethod
@@ -50,7 +50,7 @@ class Zombie_guerrier(Zombie):
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 5
         return max(0, raw_damages)
     
-    def defeat(self, player, num_zombiesGuerrier_vaincus):
+    def defeat(self, player : Character, num_zombiesGuerrier_vaincus):
         player.gain_exp(self.exp_reward * num_zombiesGuerrier_vaincus)
     
     @classmethod
@@ -70,9 +70,12 @@ class Skeletons(Character):
         print(f"💀 {self.name} [bold]prend des dégâts ![bold]")
         return super().compute_raw_damages(damages, roll, attacker)
     
+    def defeat(self, player : Character, num_skeletons_vaincus):
+        player.gain_exp(self.exp_reward * num_skeletons_vaincus)
+    
     @classmethod
-    def create_enemy(cls, dice):
-        return cls(dice=dice)
+    def create_enemy(cls, ):
+        return cls(dice=Dice(6))
 
 class Reinforced_Skeleton(Skeletons):
     def compute_damages(self, roll, target):
@@ -83,24 +86,24 @@ class Reinforced_Skeleton(Skeletons):
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 3
         return max(0, raw_damages)
     
-    def drop_exp(self):
-        return 35
+    def defeat(self, player : Character, num_Reinforced_Skeletons_vaincus):
+        player.gain_exp(self.exp_reward * num_Reinforced_Skeletons_vaincus) 
     
     @classmethod
-    def create_enemy(cls, dice):
-        return cls(name="Squelette renforcé",dice=dice)
+    def create_enemy(cls):
+        return cls(name="Squelette renforcé",dice=Dice(6), exp_reward=70)
 
 class armor_Skeletons(Skeletons):
     def compute_raw_damages(self, damages, roll, attacker):
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 6
         return max(0, raw_damages)
     
-    def drop_exp(self):
-        return 45
+    def defeat(self, player : Character, num_Armor_Skeletons_vaincus):
+        player.gain_exp(self.exp_reward * num_Armor_Skeletons_vaincus)
     
     @classmethod
-    def create_enemy(cls, dice):
-        return cls(name="squelette à armure",dice=dice)
+    def create_enemy(cls):
+        return cls(name="squelette à armure",dice=Dice(6), exp_reward=75)
 
 class Goblins(Character):
     def __init__ (self, name="gobelins", hp=20, attack_value=5, defense_value=5, dice=Dice(6), exp_reward=90):
@@ -114,10 +117,13 @@ class Goblins(Character):
     def compute_raw_damages(self, damages, roll, attacker):
         print(f"👹 {self.name} [bold]prend des dégâts ![/bold]")
         return super().compute_raw_damages(damages, roll, attacker)
+    
+    def defeat(self, player : Character, num_Goblins_vaincus):
+        player.gain_exp(self.exp_reward * num_Goblins_vaincus)
 
     @classmethod
-    def create_enemy(cls, dice):
-        return cls(dice=dice)
+    def create_enemy(cls):
+        return cls(dice=Dice(6))
 
 class big_goblins(Goblins):
     def compute_damages(self, roll, target):
@@ -127,12 +133,12 @@ class big_goblins(Goblins):
         raw_damages = super().compute_raw_damages(damages, roll, attacker) - 4
         return max(0, raw_damages)
     
-    def drop_exp(self):
-        return 35
+    def defeat(self, player : Character, num_big_gobelins_vaincus):
+        player.gain_exp(self.exp_reward * num_big_gobelins_vaincus)
     
     @classmethod
-    def create_enemy(cls, dice):
-        return cls(name="Gros gobelin",dice=dice)
+    def create_enemy(cls):
+        return cls(name="Gros gobelin",dice=Dice(6))
         
 
 class Trolls(Character):
@@ -148,24 +154,23 @@ class Trolls(Character):
         print(f"🧌 {self.name} [bold]prend des dégâts ![/bold]")
         return super().compute_raw_damages(damages, roll, attacker)
     
-    def drop_exp(self):
-        return 45
-
+    def defeat(self, player : Character, num_Trolls_vaincus):
+        player.gain_exp(self.exp_reward * num_Trolls_vaincus)
 
     @classmethod
-    def create_enemy(cls, dice):
-        return cls(dice=dice)
+    def create_enemy(cls):
+        return cls(dice=Dice(6))
 
 class Olog_hai(Trolls):
     def compute_damages(self, roll, target):
         print("🧌 {self.name} [bold]Vous attaque ![/bold] (+5 dmg)")
         return super().compute_damages(roll, target) + 5
     
-    def drop_exp(self):
-        return 50
+    def defeat(self, player : Character, num_Olog_hai_vaincus):
+        player.gain_exp(self.exp_reward * num_Olog_hai_vaincus)
     
     @classmethod
-    def create_enemy(cls, dice):
-        return cls(name="Olog hai",dice=dice)
+    def create_enemy(cls):
+        return cls(name="Olog hai",dice=Dice(6))
 
 ENNEMIES = [Zombie, Zombie2_0, Zombie_guerrier, Skeletons, Reinforced_Skeleton, armor_Skeletons, Goblins, big_goblins, Trolls, Olog_hai]
