@@ -100,6 +100,38 @@ def choose_ally(character_class):
         else:
             print("Choix invalide.")
 
+            
+import sys
+import character
+import random
+from dice import Dice
+
+def show_game_menu():
+    print("Menu secondaire :")
+    print("/" * 30)
+    print("|", "1. Shop".ljust(25), "|")
+    print("|", "2. Accès au donjon".ljust(25), "|")
+    print("|", "3. Quitter".ljust(25), "|")
+    print("/" * 30)
+
+def select_option():
+    show_game_menu()  # Afficher le menu secondaire
+    while True:
+        choice = input("Entrez votre choix : ")
+        if choice == "1":
+            print("Vous avez choisi d'aller au magasin.")
+            # Ajoutez ici le code pour accéder au magasin
+            break
+        elif choice == "2":
+            print("Vous avez choisi d'accéder au donjon.")
+            # Ajoutez ici le code pour accéder au donjon
+            break
+        elif choice == "3":
+            print("Au revoir !")
+            sys.exit()
+        else:
+            print("Choix invalide. Veuillez entrer une option valide (1, 2 ou 3).")
+
 
 if __name__ == "__main__":
     print("Début du script...")

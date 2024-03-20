@@ -14,21 +14,19 @@ class Character:
         self.level = 1  # Niveau
         self.exp_reward = exp_reward
 
-    def get_exp_reward(self):
-        return self.exp_reward
-    
     def gain_exp(self, amount):
         self.exp += amount
         print(f"{self.name} a gagné {amount} points d'expérience.")
         self.check_level_up()  # Vérifie si le personnage monte de niveau
 
     def check_level_up(self):
-        exp_threshold = 50 * self.level *1.5  # Seuil d'expérience pour passer au niveau suivant
+        exp_threshold = 50 * self.level  # Seuil d'expérience pour passer au niveau suivant
         if self.exp >= exp_threshold:
             self.level += 1
             print(f"{self.name} a atteint le niveau {self.level} !")
-            self.exp -= self.get_exp_reward()  # Retire l'excès d'EXP pour le prochain niveau
+            self.exp -= exp_threshold  # Retire l'excès d'EXP pour le prochain niveau
 
+            # Exemple : Augmente les statistiques lors du passage de niveau
             self.hp_max += 10
             self.hp = self.hp_max
             self.attack_value += 2
@@ -131,7 +129,7 @@ class Druid(Character):
         return self.mana_max
 
     def heal_ally(self, target : Character):
-        if target in self.allies and self.mana >= 0:
+        if target in self.allies and self.mana >= self.mana_cost():
             heal_amount = min(self.healing_value, target.hp_max - target.hp)
             target.increase_hp(heal_amount)
             print(f"{self.name} [green]soigne[/green] {target.name} de {self.healing_value} pv (mana: {self.mana}/{self.mana_max})")
@@ -143,10 +141,12 @@ class Druid(Character):
         print(
             f"[{'🔵' * self.mana}{'⚪' * (self.mana_max - self.mana)}] {self.mana}/{self.mana_max}mana")
 
+    def mana_cost(self):
+        return random.randint(1,5)
+    
     def cast_spell(self, target):
         self.show_manabar()
-        mana_cost = random.randint(1, self.mana_max)  # Déterminer un coût de mana aléatoire entre 1 et self.mana_max
-        print(mana_cost)
+        mana_cost = self.mana_cost()  # Déterminer un coût de mana aléatoire entre 1 et self.mana_max
         if target in self.allies and self.mana >= mana_cost:
             self.mana -= mana_cost
             self.heal_ally(target)
@@ -155,3 +155,7 @@ class Druid(Character):
             print("Cet allié n'est pas dans la liste des alliés.")
         else:
             print(f"{self.name} n'a pas assez de mana pour lancer un sort.")
+        self.show_manabar()
+
+
+

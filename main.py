@@ -10,4 +10,5 @@ if player is None:
     exit()
 
 # Lancer le jeu avec le personnage et l'allié sélectionnés
+menu.select_option()
 game.start_game(player,ally)
