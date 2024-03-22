@@ -6,7 +6,7 @@ from dice import Dice
 player = Character("Nom du personnage", 100, 15, 5, dice=Dice(6), exp_reward=1)
 
 # Création d'une liste d'ennemis
-zombies = [Zombie.create_enemy() for _ in range(2)] 
+zombies = [Zombie.create_enemy() for _ in range(3)] 
 
 # Combat contre les zombies
 for zombie in zombies:

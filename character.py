@@ -21,6 +21,7 @@ class Character:
         self.exp += amount
         print(f"{self.name} a gagné {amount} points d'expérience.")
         self.check_level_up()  # Vérifie si le personnage monte de niveau
+        self.show_expbar()
 
     def check_level_up(self):
         exp_threshold = 50 * self.level * 1.5  # Seuil d'expérience pour passer au niveau suivant

@@ -1,5 +1,5 @@
 from character import Character, Warrior, Mage, Thief, Archer, Druid
-from ennemis import Zombie, Skeletons, Goblins, Trolls
+from ennemis import Zombie,Zombie2_0,Zombie_guerrier, Skeletons,Reinforced_Skeleton,armor_Skeletons ,Goblins,big_goblins ,Trolls, Olog_hai
 from dice import Dice
 import menu
 
@@ -99,44 +99,71 @@ def combat(player, ally, enemies):
             print("You have defeated all enemies! ou")
             break
 
+class Dungeon:
+    def __init__(self, name, enemies):
+        self.name = name
+        self.enemies = enemies
+
 def start_game(player, ally):
     print("Bienvenue dans le jeu !")
     dungeons = []
     dungeons.append(
         Dungeon("Donjon 1", [
-            Zombie(),
-            Zombie(),
-            Zombie(),
+            Zombie.create_enemy() for _ in range(3)
+            # ...
+        ]))
+    dungeons.append(
+        Dungeon("Etage 2", [
+            Zombie2_0.create_enemy() for _ in range(3)
+            #...
+        ]))
+    dungeons.append(
+        Dungeon("Etage 3", [
+            Zombie_guerrier.create_enemy() for _ in range(3)
             # ...
         ]))
     dungeons.append(
         Dungeon("Donjon 2", [
-            Zombie(),
-            Zombie(),
-            Zombie(),
+            Skeletons.create_enemy()
+            # ...
+        ]))
+    dungeons.append(
+        Dungeon("Etage 2", [
+            Reinforced_Skeleton.create_enemy() for _ in range(3)
+            # ...
+        ]))
+    dungeons.append(
+        Dungeon("Etage 3", [
+            armor_Skeletons.create_enemy() for _ in range(3)
             # ...
         ]))
     dungeons.append(
         Dungeon("Donjon 3", [
-            Zombie(),
-            Zombie(),
-            Zombie(),
+            Goblins.create_enemy(),
+            # ...
+        ]))
+    dungeons.append(
+        Dungeon("Etage 2", [
+            big_goblins.create_enemy() for _ in range(3)
             # ...
         ]))
     dungeons.append(
         Dungeon("Donjon 4", [
-            Zombie(),
-            Zombie(),
-            Zombie(),
+            Trolls.create_enemy() for _ in range(3)
             # ...
         ]))
     dungeons.append(
-        Dungeon("Donjon 5", [
-            Zombie(),
-            Zombie(),
-            Zombie(),
+        Dungeon("Etage 2", [
+            Olog_hai.create_enemy() for _ in range(3)
             # ...
         ]))
+    # dungeons.append(
+    #     Dungeon("Etage 3", [
+    #         Zombie(),
+    #         Zombie(),
+    #         Zombie(),
+    #         # ...
+    #     ]))
 
     for dungeon in dungeons:
         print(f"You enter the {dungeon.name}!")
