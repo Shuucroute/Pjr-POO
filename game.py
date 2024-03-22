@@ -2,6 +2,9 @@ from character import Character, Warrior, Mage, Thief, Archer, Druid
 from ennemis import Zombie,Zombie2_0,Zombie_guerrier, Skeletons,Reinforced_Skeleton,armor_Skeletons ,Goblins,big_goblins ,Trolls, Olog_hai
 from dice import Dice
 import menu
+import random
+from boss import Cadaverus_Devorator, Kondylos_o_Sarantapus, Roi_Gobelin, Garrok_le_Féroce, Balrog
+import random
 
 class Player(Character):
     def __init__(self, name, health, attack, defense, dice, exp_reward):
@@ -107,6 +110,34 @@ class Dungeon:
 def start_game(player, ally):
     print("Bienvenue dans le jeu !")
     dungeons = []
+
+    dungeons.append(
+            Dungeon("Etage 4", [
+                Kondylos_o_Sarantapus.create_boss()
+                # ...
+            ]))
+    dungeons.append(
+            Dungeon("Etage 4", [
+                Kondylos_o_Sarantapus.create_boss()
+                # ...
+            ]))
+    dungeons.append(
+            Dungeon("Etage 4", [
+                Kondylos_o_Sarantapus.create_boss()
+                # ...
+            ]))
+    dungeons.append(
+            Dungeon("Etage 4", [
+                Kondylos_o_Sarantapus.create_boss()
+                # ...
+            ]))
+    dungeons.append(
+            Dungeon("Etage 4", [
+                Kondylos_o_Sarantapus.create_boss()
+                # ...
+            ]))
+    
+
     dungeons.append(
         Dungeon("Donjon 1", [
             Zombie.create_enemy() for _ in range(3)
@@ -122,6 +153,12 @@ def start_game(player, ally):
             Zombie_guerrier.create_enemy() for _ in range(3)
             # ...
         ]))
+    if random.random() < 0.4 :
+        dungeons.append(
+            Dungeon("Etage 4", [
+                Cadaverus_Devorator.create_boss()
+                # ...
+            ]))
     dungeons.append(
         Dungeon("Donjon 2", [
             Skeletons.create_enemy()
@@ -137,6 +174,12 @@ def start_game(player, ally):
             armor_Skeletons.create_enemy() for _ in range(3)
             # ...
         ]))
+    if random.random() < 0.4 :
+        dungeons.append(
+            Dungeon("Etage 4", [
+                Kondylos_o_Sarantapus.create_boss()
+                # ...
+            ]))
     dungeons.append(
         Dungeon("Donjon 3", [
             Goblins.create_enemy(),
@@ -147,6 +190,12 @@ def start_game(player, ally):
             big_goblins.create_enemy() for _ in range(3)
             # ...
         ]))
+    if random.random() < 0.4 :
+        dungeons.append(
+            Dungeon("Etage 3", [
+                Roi_Gobelin.create_boss()
+                # ...
+            ]))
     dungeons.append(
         Dungeon("Donjon 4", [
             Trolls.create_enemy() for _ in range(3)
@@ -157,13 +206,17 @@ def start_game(player, ally):
             Olog_hai.create_enemy() for _ in range(3)
             # ...
         ]))
-    # dungeons.append(
-    #     Dungeon("Etage 3", [
-    #         Zombie(),
-    #         Zombie(),
-    #         Zombie(),
-    #         # ...
-    #     ]))
+    if random.random() < 0.4 :
+        dungeons.append(
+            Dungeon("Etage 4", [
+                Garrok_le_Féroce.create_boss()
+                # ...
+            ]))
+    dungeons.append(
+            Dungeon("Etage 4", [
+                Balrog.create_mega_boss()
+                # ...
+            ]))    
 
     for dungeon in dungeons:
         print(f"You enter the {dungeon.name}!")

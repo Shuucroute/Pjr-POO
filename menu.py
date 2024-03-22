@@ -60,7 +60,7 @@ def choose_character_class():
 
 def create_main_character(name, character_class):
     if character_class == "archer":
-        return character.Archer(name, 100, 10, 5,Dice(6), exp_reward=1)
+        return character.Archer(name, 100, 100, 5,Dice(6), exp_reward=1)
     elif character_class == "thief":
         return character.Thief(name, 80, 12, 4,Dice(6), exp_reward=1)
     elif character_class == "warrior":
