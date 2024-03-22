@@ -68,8 +68,7 @@ def combat(player, ally, enemies):
         elif choice == "2":
             print("No items are available at the moment.")
         elif choice == "3":
-            print(ally.__class__.__name__)
-            if ally.__class__.__name__ == Druid :
+            if isinstance(ally, Druid):
                 if ally.mana >= 0:
                     ally.cast_spell(player)
                 else:
@@ -97,11 +96,8 @@ def combat(player, ally, enemies):
 
         # Vérifier si les ennemis sont toujours en vie
         if not enemies:
-            print("You have defeated all enemies!")
+            print("You have defeated all enemies! ou")
             break
-
-
-
 
 def start_game(player, ally):
     print("Bienvenue dans le jeu !")
@@ -141,7 +137,6 @@ def start_game(player, ally):
             Zombie(),
             # ...
         ]))
-    
 
     for dungeon in dungeons:
         print(f"You enter the {dungeon.name}!")

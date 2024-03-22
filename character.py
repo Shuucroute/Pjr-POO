@@ -23,14 +23,13 @@ class Character:
         self.check_level_up()  # Vérifie si le personnage monte de niveau
 
     def check_level_up(self):
-        exp_threshold = 50 * self.level *1.5  # Seuil d'expérience pour passer au niveau suivant
+        exp_threshold = 50 * self.level * 1.5  # Seuil d'expérience pour passer au niveau suivant
         if self.exp >= exp_threshold:
             self.level += 1
             print(f"{self.name} a atteint le niveau {self.level} !")
-            self.exp -= self.get_exp_reward()  # Retire l'excès d'EXP pour le prochain niveau
+            self.exp -= self.get_exp_reward()  
 
             self.hp_max += 10
-            self.hp = self.hp_max
             self.attack_value += 2
             self.defense_value += 1
             self.update_exp_reward()  # Met à jour la récompense en expérience pour le prochain niveau
@@ -39,9 +38,12 @@ class Character:
         self.exp_reward += 1  # Exemple de mise à jour de la récompense en expérience pour le prochain niveau
 
     def show_expbar(self):
-        filled_exp = min(self.exp, 50 * self.level)
-        empty_exp = 50 * self.level - filled_exp
-        print(f"[{'🟢' * filled_exp}{'⚫' * empty_exp}] {self.exp}/{50 * self.level} EXP")
+        max_exp = 50  # L'échelle est désormais de 0 à 50
+        current_exp = min(self.exp, max_exp)  # S'assurer que l'expérience n'excède pas le maximum
+
+        if current_exp == max_exp:
+            current_exp = 0  # Si l'expérience est au maximum, afficher 0
+        print(f"{self.name} : {current_exp}/{max_exp} EXP")
 
 
     def __str__(self) -> str:
@@ -119,19 +121,21 @@ class Archer(Character):
         return super().compute_damages(roll,target) +5
 
 
+import random
+
 class Druid(Character):
     def __init__(self, name, hp_max, attack_value, defense_value, mana_max, dice, exp_reward, healing_value):
         super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward)
         self.mana_max = mana_max
-        self.mana = mana_max  # Mettre à jour la valeur initiale de self.mana pour qu'elle soit égale à mana_max
+        self.mana = mana_max
         self.healing_value = healing_value
         self.allies = []
 
     def get_mana_max(self) -> int:
         return self.mana_max
 
-    def heal_ally(self, target : Character):
-        if target in self.allies and self.mana >= 0:
+    def heal_ally(self, target: Character):
+        if self.mana >= 0:
             heal_amount = min(self.healing_value, target.hp_max - target.hp)
             target.increase_hp(heal_amount)
             print(f"{self.name} [green]soigne[/green] {target.name} de {self.healing_value} pv (mana: {self.mana}/{self.mana_max})")
@@ -145,8 +149,7 @@ class Druid(Character):
 
     def cast_spell(self, target):
         self.show_manabar()
-        mana_cost = random.randint(1, self.mana_max)  # Déterminer un coût de mana aléatoire entre 1 et self.mana_max
-        print(mana_cost)
+        mana_cost = random.randint(1, self.mana_max)
         if target in self.allies and self.mana >= mana_cost:
             self.mana -= mana_cost
             self.heal_ally(target)
