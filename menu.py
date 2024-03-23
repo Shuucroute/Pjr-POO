@@ -17,11 +17,11 @@ def select_character():
     while True:
         choice = input("Entrez votre choix : ")
         if choice == "1":
-            
+
             name = input("Entrez le nom de votre personnage : ")
             character_class = choose_character_class()
             recruit_ally = input("Voulez-vous recruter un allié? (oui/non) : ").lower()
-            if recruit_ally == "o"or "oui":
+            if recruit_ally == "o" or recruit_ally == "oui":
                 ally = choose_ally(character_class)
             else:
                 ally = None
@@ -36,9 +36,7 @@ def select_character():
             sys.exit()
         else:
             print("Choix invalide. Veuillez entrer une option valide (1, 2 ou 3).")
-    print("Fin de la sélection du personnage.")
     return player, ally
-
 
 def choose_character_class():
     print("Choisissez votre classe :")
@@ -101,17 +99,11 @@ def choose_ally(character_class):
         else:
             print("Choix invalide.")
 
-            
-import sys
-import character
-import random
-from dice import Dice
-
 def show_game_menu():
     print("Menu secondaire :")
     print("/" * 30)
-    print("|", "1. Shop".ljust(25), "|")
-    print("|", "2. Accès au donjon".ljust(25), "|")
+    print("|", "1. Accès au donjon".ljust(25), "|")
+    print("|", "2. Shop".ljust(25), "|")
     print("|", "3. Quitter".ljust(25), "|")
     print("/" * 30)
 
@@ -120,26 +112,31 @@ def select_option(player):
     while True:
         choice = input("Entrez votre choix : ")
         if choice == "1":
+            print("Vous avez choisi d'accéder au donjon.")
+            # Ajoutez ici le code pour accéder au donjon
+            break
+        elif choice == "2":
             print("Vous avez choisi d'aller au magasin.")
             shop = Shop()
-            shop.display_shop()
+            shop.display_shop(player)
             buy_choice = input("Entrez le numéro de l'article que vous souhaitez acheter : ")
             try:
                 buy_choice = int(buy_choice) - 1
-                shop.buy_item(player, buy_choice)
-            except ( ValueError, IndexError):
-                print("Choix invalide")
-            break
-        elif choice == "2":
-            print("Vous avez choisi d'accéder au donjon.")
-            # Ajoutez ici le code pour accéder au donjon
+                item = shop.items[buy_choice]
+                if player.coins >= item.price:
+                    player.coins -= item.price
+                    player.inventory.append(item)
+                    print(f"Vous avez acheté {item.name} pour {item.price} pièces d'or.")
+                else:
+                    print("Vous n'avez pas assez d'argent pour acheter cet article.")
+            except (ValueError, IndexError):
+                print("Choix invalide.")
             break
         elif choice == "3":
             print("Au revoir !")
             sys.exit()
         else:
             print("Choix invalide. Veuillez entrer une option valide (1, 2 ou 3).")
-
 
 if __name__ == "__main__":
     print("Début du script...")

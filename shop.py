@@ -7,7 +7,6 @@ from objet import WoodenDagger, SilverDagger, CoperDagger, GoldDagger
 from objet import ClassicArc, LongArc, Arbalète, TripleArc
 from objet import ManaCape, HealCape, DefenseCape, UltimateCape
 
-
 def select_shield():
     shields = [WoodenShield(), BoneShield(), IronShield(), CooperShield()]
     print("Voici les boucliers disponibles :")
@@ -50,7 +49,6 @@ def select_cape():
     for i, cape in enumerate(capes, start=1):
         print(f"{i}. {cape.name} - Prix : {cape.price} coins")
 
-
 class Shop:
     def __init__(self):
         self.items =  [
@@ -63,45 +61,55 @@ class Shop:
             ManaCape(), HealCape(), DefenseCape(), UltimateCape()
         ]
 
+    def display_shop(self, player):
+        print("Bienvenue dans le magasin !")
+        self.select_category(player)
 
-    def display_shop(self):
-        print("Bienvenue dans le magasin ! Voici les articles disponibles :")
-        print("1. Boucliers :")
-        for item in self.items[:4]:  # Afficher les boucliers
-            print(f" {item.name} - Prix : {item.price} coins")
-        print("\n2. Epées :")
-        for item in self.items[4:8]:  # Afficher les épées
-            print(f" {item.name} - Prix : {item.price} coins")
-        print("\n3. Armures :")
-        for item in self.items[8:12]:  # Afficher les armures
-            print(f" {item.name} - Prix : {item.price} coins")
-        print("\n4. Bâtons magiques :")
-        for item in self.items[12:16]:  # Afficher les bâtons magiques
-            print(f" {item.name} - Prix : {item.price} coins")
-        print("\n5. Dagues :")
-        for item in self.items[16:20]:  # Afficher les dagues
-            print(f" {item.name} - Prix : {item.price} coins")
-        print("\n6. Arcs :")
-        for item in self.items[20:24]:  # Afficher les arcs
-            print(f" {item.name} - Prix : {item.price} coins")
-        print("\n7. Capes :")
-        for item in self.items[24:]:  # Afficher les capes
-            print(f" {item.name} - Prix : {item.price} coins")
+    def select_category(self, player):
+        print("\nChoisissez une catégorie :")
+        print("1. Boucliers")
+        print("2. Epées")
+        print("3. Armures")
+        print("4. Bâtons magiques")
+        print("5. Dagues")
+        print("6. Arcs")
+        print("7. Capes")
+        category_choice = int(input("Entrez le numéro de la catégorie : "))
+        if category_choice == 1:
+            select_shield()
+            item_choice = int(input("Entrez le numéro de l'article que vous voulez acheter : "))
+            self.buy_item(player, item_choice)
+        elif category_choice == 2:
+            select_sword()
+            item_choice = int(input("Entrez le numéro de l'article que vous voulez acheter : "))
+            self.buy_item(player, item_choice + 4)
+        elif category_choice == 3:
+            select_armor()
+            item_choice = int(input("Entrez le numéro de l'article que vous voulez acheter : "))
+            self.buy_item(player, item_choice + 8)
+        elif category_choice == 4:
+            select_stick()
+            item_choice = int(input("Entrez le numéro de l'article que vous voulez acheter : "))
+            self.buy_item(player, item_choice + 12)
+        elif category_choice == 5:
+            select_dagger()
+            item_choice = int(input("Entrez le numéro de l'article que vous voulez acheter : "))
+            self.buy_item(player, item_choice + 16)
+        elif category_choice == 6:
+            select_arc()
+            item_choice = int(input("Entrez le numéro de l'article que vous voulez acheter : "))
+            self.buy_item(player, item_choice + 20)
+        elif category_choice == 7:
+            select_cape()
+            item_choice = int(input("Entrez le numéro de l'article que vous voulez acheter : "))
+            self.buy_item(player, item_choice + 24)
+        else:
+            print("Catégorie invalide.")
 
-    
-    def buy_item(self, player, choice):
-        item = self.items[choice]
+    def buy_item(self, player, item_choice):
+        item = self.items[item_choice]
         if player.coins >= item.price:
-            player.coins <= item.price
+            player.coins -= item.price
             print(f"Vous avez acheté {item.name} pour {item.price} coins. ")
-
-        
         else:
             print("Vous n'avez pas assez de coins pour acheter cet objet.")
-     
-
-
-
-
-
-        
