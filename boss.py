@@ -1,22 +1,23 @@
 from character import Character
 from dice import Dice
 
-
-
 class Boss(Character):
     boss_killed_count = 0
-    def __init__ (self, name="Boss", hp=50, attack_value=20, defense_value=20, dice=Dice("Red", 10)):
-        return super().__init__(name, hp, attack_value, defense_value, dice)
+    
+    def __init__(self, name="Boss", hp=50, attack_value=20, defense_value=20, dice=Dice(10), exp_reward=1):
+        super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
     
     @classmethod
     def increase_boss_killed_count(cls):
         cls.boss_killed_count += 1
-        if cls.boss_killed_count % 5 == 0:
-            return Balrog.summon_balrog()
-        else:
-            return None
+        if cls.boss_killed_count == 5:
+            print("Cinqs Boss sont morts ! Le Balrog apparait !")
+            return Balrog.create_mega_boss()
+        
+def kill_boss():
+    Boss.increase_boss_killed_count()
 
-class Cadaverus_Devorator(Boss): #Boss Zombie
+class Cadaverus_Devorator(Boss):
     def compute_damages(self, roll, target):
         print("Cadaverus Devorator vous attaque ! (+5 dmg)")
         return super().compute_damages(roll, target) + 5
@@ -27,10 +28,11 @@ class Cadaverus_Devorator(Boss): #Boss Zombie
         return max(0, raw_damages)
     
     @classmethod
-    def create_boss(cls, dice):
-        return cls(name="Cadaverus Devorator",dice=dice)
+    def create_boss(cls):
+        cls.increase_boss_killed_count()
+        return cls(name="Cadaverus Devorator", dice=Dice(10), exp_reward=199)
 
-class Kondylos_o_Sarantapus(Boss): #boss squelette
+class Kondylos_o_Sarantapus(Boss):
     def compute_damages(self, roll, target):
         print("Le Kondylos o Sarantapus vous attaque ! (+6 dmg)")
         return super().compute_damages(roll, target) + 6
@@ -41,10 +43,11 @@ class Kondylos_o_Sarantapus(Boss): #boss squelette
         return max(0, raw_damages)
     
     @classmethod
-    def create_boss(cls, dice):
-        return cls(name="Kondylos o Sarantapus",dice=dice)
-    
-class Roi_Gobelin(Boss): #boss gobelin
+    def create_boss(cls):
+        cls.increase_boss_killed_count()
+        return cls(name="Kondylos o Sarantapus", dice=Dice(10), exp_reward=200)
+
+class Roi_Gobelin(Boss):
     def compute_damages(self, roll, target):
         print("Le Roi Gobelin vous attaque ! (+7 dmg)")
         return super().compute_damages(roll, target) + 7
@@ -55,10 +58,11 @@ class Roi_Gobelin(Boss): #boss gobelin
         return max(0, raw_damages)
     
     @classmethod
-    def create_boss(cls, dice):
-        return cls(name="Roi Gobelin",dice=dice)
-    
-class Garrok_le_Féroce(Boss): #troll boss
+    def create_boss(cls):
+        cls.increase_boss_killed_count()
+        return cls(name="Roi Gobelin", dice=Dice(10), exp_reward=210)
+
+class Garrok_le_Féroce(Boss):
     def compute_damages(self, roll, target):
         print("Le Garrok le Féroce vous attaque ! (+10 dmg)")
         return super().compute_damages(roll, target) +10 
@@ -69,12 +73,13 @@ class Garrok_le_Féroce(Boss): #troll boss
         return max(0, raw_damages)
     
     @classmethod
-    def create_boss(cls, dice):
-        return cls(name="Garrok le Féroce",dice=dice)
+    def create_boss(cls):
+        cls.increase_boss_killed_count()
+        return cls(name="Garrok le Féroce", dice=Dice(10), exp_reward=220)
 
 class Balrog(Character):
-    def __init__ (self, name="Balrog", hp=100, attack_value=50, defense_value=50, dice=Dice("Black_red", 15)):
-        return super().__init__(name, hp, attack_value, defense_value, dice)
+    def __init__(self, name="Balrog", hp=100, attack_value=50, defense_value=50, dice=Dice(15), exp_reward=1):
+        super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
     
     @classmethod
     def summon_balrog(cls):
@@ -82,5 +87,5 @@ class Balrog(Character):
         return cls()
     
     @classmethod
-    def create_mega_boss(cls, dice):
-        return cls(dice=dice)
+    def create_mega_boss(cls):
+        return cls(dice=Dice(15), exp_reward=300)

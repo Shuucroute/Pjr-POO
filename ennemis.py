@@ -4,13 +4,12 @@ from rich.text import Text
 from rich import print
 
 
-
 class Zombie(Character):
-    def __init__(self, name="Zombie", hp=20, attack_value=20, defense_value=5, dice=Dice(6), exp_reward=50):
+    def __init__(self, name="Zombie", hp=20, attack_value=15, defense_value=5, dice=Dice(6), exp_reward=50):
         super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
-        self.name = Text(f"[bold green]{self.name}[/bold green]")
+        self.name = Text(f"[green1]{self.name}[/green1]")
         print(self.exp_reward)
-
+    
     def compute_damages(self, roll, target):
         print(f"🧟 {self.name} [bold]Vous attaque ![/bold]")
         return super().compute_damages(roll, target)
@@ -58,7 +57,7 @@ class Zombie_guerrier(Zombie):
         return cls(name="Zombie Guerrier" ,dice=Dice(6), exp_reward=100)
 
 class Skeletons(Character):
-    def __init__(self, name="Squelettes", hp=20, attack_value=5, defense_value=3, dice=Dice(6), exp_reward=60):
+    def __init__(self, name="Squelettes", hp=20, attack_value=5, defense_value=3, dice=Dice(6), exp_reward=65):
         super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
         self.name = Text(f"[dim]{self.name}[/dim]")
 
@@ -138,12 +137,12 @@ class big_goblins(Goblins):
     
     @classmethod
     def create_enemy(cls):
-        return cls(name="Gros gobelin",dice=Dice(6))
+        return cls(name="Gros gobelin",dice=Dice(6), exp_reward=95)
         
 
 class Trolls(Character):
-    def __init__ (self, name="Trolls", hp=35, attack_value=15, defense_value=10, dice=Dice(6)):
-        super().__init__(name, hp, attack_value, defense_value, dice)
+    def __init__ (self, name="Trolls", hp=35, attack_value=15, defense_value=10, dice=Dice(6), exp_reward= 105):
+        super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
         self.name = Text(f"[dark green]{self.name}[/dark green]")
 
     def compute_damages(self, roll, target):
@@ -171,6 +170,6 @@ class Olog_hai(Trolls):
     
     @classmethod
     def create_enemy(cls):
-        return cls(name="Olog hai",dice=Dice(6))
+        return cls(name="Olog hai",dice=Dice(6), exp_reward=110)
 
 ENNEMIES = [Zombie, Zombie2_0, Zombie_guerrier, Skeletons, Reinforced_Skeleton, armor_Skeletons, Goblins, big_goblins, Trolls, Olog_hai]

@@ -2,6 +2,7 @@ import sys
 import character
 import random
 from dice import Dice
+from shop import *
 
 def show_main_menu():
     print("Bienvenue dans le jeu !")
@@ -20,7 +21,7 @@ def select_character():
             name = input("Entrez le nom de votre personnage : ")
             character_class = choose_character_class()
             recruit_ally = input("Voulez-vous recruter un allié? (oui/non) : ").lower()
-            if recruit_ally == "o":
+            if recruit_ally == "o"or "oui":
                 ally = choose_ally(character_class)
             else:
                 ally = None
@@ -60,7 +61,7 @@ def choose_character_class():
 
 def create_main_character(name, character_class):
     if character_class == "archer":
-        return character.Archer(name, 100, 10, 5,Dice(6), exp_reward=1)
+        return character.Archer(name, 100, 100, 5,Dice(6), exp_reward=1)
     elif character_class == "thief":
         return character.Thief(name, 80, 12, 4,Dice(6), exp_reward=1)
     elif character_class == "warrior":
@@ -114,13 +115,20 @@ def show_game_menu():
     print("|", "3. Quitter".ljust(25), "|")
     print("/" * 30)
 
-def select_option():
+def select_option(player):
     show_game_menu()  # Afficher le menu secondaire
     while True:
         choice = input("Entrez votre choix : ")
         if choice == "1":
             print("Vous avez choisi d'aller au magasin.")
-            # Ajoutez ici le code pour accéder au magasin
+            shop = Shop()
+            shop.display_shop()
+            buy_choice = input("Entrez le numéro de l'article que vous souhaitez acheter : ")
+            try:
+                buy_choice = int(buy_choice) - 1
+                shop.buy_item(player, buy_choice)
+            except ( ValueError, IndexError):
+                print("Choix invalide")
             break
         elif choice == "2":
             print("Vous avez choisi d'accéder au donjon.")

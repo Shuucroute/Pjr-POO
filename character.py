@@ -3,7 +3,7 @@ import random
 from rich import print
 
 class Character:
-    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward) -> None:
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward, coins=0) -> None:
         self.name = name
         self.hp_max = hp_max
         self.hp = hp_max
@@ -13,6 +13,7 @@ class Character:
         self.exp = 0  # Points d'expérience
         self.level = 1  # Niveau
         self.exp_reward = exp_reward
+        self.coins = coins
 
     def get_exp_reward(self):
         return self.exp_reward
@@ -21,16 +22,16 @@ class Character:
         self.exp += amount
         print(f"{self.name} a gagné {amount} points d'expérience.")
         self.check_level_up()  # Vérifie si le personnage monte de niveau
+        self.show_expbar()
 
     def check_level_up(self):
-        exp_threshold = 50 * self.level *1.5  # Seuil d'expérience pour passer au niveau suivant
+        exp_threshold = 50 * self.level * 1.5  # Seuil d'expérience pour passer au niveau suivant
         if self.exp >= exp_threshold:
             self.level += 1
             print(f"{self.name} a atteint le niveau {self.level} !")
-            self.exp -= self.get_exp_reward()  # Retire l'excès d'EXP pour le prochain niveau
+            self.exp -= self.get_exp_reward()  
 
             self.hp_max += 10
-            self.hp = self.hp_max
             self.attack_value += 2
             self.defense_value += 1
             self.update_exp_reward()  # Met à jour la récompense en expérience pour le prochain niveau
@@ -39,9 +40,12 @@ class Character:
         self.exp_reward += 1  # Exemple de mise à jour de la récompense en expérience pour le prochain niveau
 
     def show_expbar(self):
-        filled_exp = min(self.exp, 50 * self.level)
-        empty_exp = 50 * self.level - filled_exp
-        print(f"[{'🟢' * filled_exp}{'⚫' * empty_exp}] {self.exp}/{50 * self.level} EXP")
+        max_exp = 50  # L'échelle est désormais de 0 à 50
+        current_exp = min(self.exp, max_exp)  # S'assurer que l'expérience n'excède pas le maximum
+
+        if current_exp == max_exp:
+            current_exp = 0  # Si l'expérience est au maximum, afficher 0
+        print(f"{self.name} : {current_exp}/{max_exp} EXP")
 
 
     def __str__(self) -> str:
@@ -93,12 +97,18 @@ class Character:
 
 
 class Warrior(Character):
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward, coins=0):
+        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward, coins)
+        
     def compute_damages(self, roll, target):
         print("🪓 Axe in your face ! (+3 dmg)")
         return super().compute_damages(roll, target) + 3
 
 
 class Mage(Character):
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward, coins=0):
+        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward, coins)
+
     def compute_raw_damages(self, damages, roll, attacker):
         print(f"🔮 Magic armor ! (-3 dmg)")
         return super().compute_raw_damages(damages, roll, attacker) - 3
@@ -109,29 +119,37 @@ class Mage(Character):
 
 
 class Thief(Character):
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward, coins=0):
+        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward, coins)
+
     def compute_damages(self, roll, target):
         print(f"🔪 Sneacky attack ! (+{target.defense_value} dmg)")
         return super().compute_damages(roll, target) + target.defense_value
     
 class Archer(Character):
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward, coins=0):
+        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward, coins)
+
     def compute_damages(self, roll, target):
         print("🏹 Arrow hit you ! (+5dmg)")
         return super().compute_damages(roll,target) +5
 
 
+import random
+
 class Druid(Character):
-    def __init__(self, name, hp_max, attack_value, defense_value, mana_max, dice, exp_reward, healing_value):
-        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward)
+    def __init__(self, name, hp_max, attack_value, defense_value, mana_max, dice, exp_reward, healing_value, coins=0):
+        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward, coins)
         self.mana_max = mana_max
-        self.mana = mana_max  # Mettre à jour la valeur initiale de self.mana pour qu'elle soit égale à mana_max
+        self.mana = mana_max
         self.healing_value = healing_value
         self.allies = []
 
     def get_mana_max(self) -> int:
         return self.mana_max
 
-    def heal_ally(self, target : Character):
-        if target in self.allies and self.mana >= 0:
+    def heal_ally(self, target: Character):
+        if self.mana >= 0:
             heal_amount = min(self.healing_value, target.hp_max - target.hp)
             target.increase_hp(heal_amount)
             print(f"{self.name} [green]soigne[/green] {target.name} de {self.healing_value} pv (mana: {self.mana}/{self.mana_max})")
@@ -145,8 +163,7 @@ class Druid(Character):
 
     def cast_spell(self, target):
         self.show_manabar()
-        mana_cost = random.randint(1, self.mana_max)  # Déterminer un coût de mana aléatoire entre 1 et self.mana_max
-        print(mana_cost)
+        mana_cost = random.randint(1, self.mana_max)
         if target in self.allies and self.mana >= mana_cost:
             self.mana -= mana_cost
             self.heal_ally(target)
