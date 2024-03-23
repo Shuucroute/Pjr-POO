@@ -11,10 +11,9 @@ class Boss(Character):
     def increase_boss_killed_count(cls):
         cls.boss_killed_count += 1
         if cls.boss_killed_count == 5:
-            return Balrog.summon_balrog()  # Appeler la méthode pour invoquer Balrog
-        else:
-            return None
-
+            print("Cinqs Boss sont morts ! Le Balrog apparait !")
+            return Balrog.create_mega_boss()
+        
 def kill_boss():
     Boss.increase_boss_killed_count()
 

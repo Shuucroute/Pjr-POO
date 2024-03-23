@@ -20,7 +20,7 @@ def select_character():
             name = input("Entrez le nom de votre personnage : ")
             character_class = choose_character_class()
             recruit_ally = input("Voulez-vous recruter un allié? (oui/non) : ").lower()
-            if recruit_ally == "o""oui":
+            if recruit_ally == "o"or "oui":
                 ally = choose_ally(character_class)
             else:
                 ally = None
