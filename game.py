@@ -226,5 +226,3 @@ def start_game(player, ally):
                     kill_boss()
             input("Appuyez sur Entrée pour continuer...")
 
-if __name__ == "__main__":
-    start_game()
