@@ -4,13 +4,12 @@ from rich.text import Text
 from rich import print
 
 
-
 class Zombie(Character):
     def __init__(self, name="Zombie", hp=20, attack_value=15, defense_value=5, dice=Dice(6), exp_reward=50):
         super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
-        self.name = Text(f"[bold green]{self.name}[/bold green]")
+        self.name = Text(f"[green1]{self.name}[/green1]")
         print(self.exp_reward)
-
+    
     def compute_damages(self, roll, target):
         print(f"🧟 {self.name} [bold]Vous attaque ![/bold]")
         return super().compute_damages(roll, target)
