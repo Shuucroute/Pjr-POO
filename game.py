@@ -157,5 +157,3 @@ def start_game(player, ally):
             # Add logic here to move on to the next dungeon
             input("Press Enter to continue...")
 
-if __name__ == "__main__":
-    start_game()
