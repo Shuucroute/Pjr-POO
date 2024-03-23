@@ -2,6 +2,7 @@ import menu
 import game
 import character
 
+
 # Afficher le menu principal et choisir un personnage
 player, ally = menu.select_character()
 
@@ -15,5 +16,5 @@ if isinstance(ally, character.Druid):
     ally.allies.append(player)
 
 # Lancer le jeu avec le personnage et l'allié sélectionnés
-menu.select_option()
+menu.select_option(player)
 game.start_game(player, ally)

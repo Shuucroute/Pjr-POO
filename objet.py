@@ -49,7 +49,7 @@ class IronSword(Sword):
 class DiamondSword(Sword):
     def __init__(self):
         self.price = 30
-        super().__init__("Epée en diament", +3)
+        super().__init__("Epée en diamant", +3)
 
 class Excalibur(Sword):
     def __init__(self):
@@ -175,29 +175,27 @@ class TripleArc(Arc):
         
 
 class Cape(Character):
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, name, price, bonus):
+        super().__init__(name, 0, 0, 0, 0, 0)
+        self.price = price
+        self.bonus = bonus
 
-        def apply_effects(self, character):
+    def apply_effects(self, character):
             pass
 
 class ManaCape(Cape):
     def __init__(self):
-        self.price = 10
-        super().__init__("Cape de Mana", +10) #ManaBonus
+        super().__init__("Cape de Mana", 10 , {"ManaBonus": 10}) 
 
 class HealCape(Cape):
-    def __init__(self):
-        self.price = 20        
-        super().__init__("Cape de heal", +15) #HealBonus
+    def __init__(self):       
+        super().__init__("Cape de heal", 15 , {"HealBonus": 15}) 
 
 class DefenseCape(Cape):
     def __init__(self):
-        self.price = 30
-        super().__init__("Cape de défense", +5) #DefenseBonus
+        super().__init__("Cape de défense", 5 , {"DefenseBonus": 5}) 
 
 class UltimateCape(Cape):
     def __init__(self):
-        self.price = 40
-        super().__init__("Cape Ultime", +10, +15, +5) 
+        super().__init__("Cape Ultime", 40, {"ManaBonus" :+10,"HealBonus": +15,"DefenseBonus": +5}) 
 

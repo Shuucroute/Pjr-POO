@@ -3,7 +3,7 @@ import random
 from rich import print
 
 class Character:
-    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward) -> None:
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward, coins=0) -> None:
         self.name = name
         self.hp_max = hp_max
         self.hp = hp_max
@@ -13,6 +13,7 @@ class Character:
         self.exp = 0  # Points d'expérience
         self.level = 1  # Niveau
         self.exp_reward = exp_reward
+        self.coins = coins
 
     def get_exp_reward(self):
         return self.exp_reward
@@ -96,12 +97,18 @@ class Character:
 
 
 class Warrior(Character):
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward, coins=0):
+        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward, coins)
+        
     def compute_damages(self, roll, target):
         print("🪓 Axe in your face ! (+3 dmg)")
         return super().compute_damages(roll, target) + 3
 
 
 class Mage(Character):
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward, coins=0):
+        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward, coins)
+
     def compute_raw_damages(self, damages, roll, attacker):
         print(f"🔮 Magic armor ! (-3 dmg)")
         return super().compute_raw_damages(damages, roll, attacker) - 3
@@ -112,11 +119,17 @@ class Mage(Character):
 
 
 class Thief(Character):
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward, coins=0):
+        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward, coins)
+
     def compute_damages(self, roll, target):
         print(f"🔪 Sneacky attack ! (+{target.defense_value} dmg)")
         return super().compute_damages(roll, target) + target.defense_value
     
 class Archer(Character):
+    def __init__(self, name, hp_max, attack_value, defense_value, dice, exp_reward, coins=0):
+        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward, coins)
+
     def compute_damages(self, roll, target):
         print("🏹 Arrow hit you ! (+5dmg)")
         return super().compute_damages(roll,target) +5
@@ -125,8 +138,8 @@ class Archer(Character):
 import random
 
 class Druid(Character):
-    def __init__(self, name, hp_max, attack_value, defense_value, mana_max, dice, exp_reward, healing_value):
-        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward)
+    def __init__(self, name, hp_max, attack_value, defense_value, mana_max, dice, exp_reward, healing_value, coins=0):
+        super().__init__(name, hp_max, attack_value, defense_value, dice, exp_reward, coins)
         self.mana_max = mana_max
         self.mana = mana_max
         self.healing_value = healing_value
