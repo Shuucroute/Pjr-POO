@@ -2,6 +2,7 @@ import sys
 import character
 import random
 from dice import Dice
+from shop import *
 
 def show_main_menu():
     print("Bienvenue dans le jeu !")
@@ -114,13 +115,20 @@ def show_game_menu():
     print("|", "3. Quitter".ljust(25), "|")
     print("/" * 30)
 
-def select_option():
+def select_option(player):
     show_game_menu()  # Afficher le menu secondaire
     while True:
         choice = input("Entrez votre choix : ")
         if choice == "1":
             print("Vous avez choisi d'aller au magasin.")
-            # Ajoutez ici le code pour accéder au magasin
+            shop = Shop()
+            shop.display_shop()
+            buy_choice = input("Entrez le numéro de l'article que vous souhaitez acheter : ")
+            try:
+                buy_choice = int(buy_choice) - 1
+                shop.buy_item(player, buy_choice)
+            except ( ValueError, IndexError):
+                print("Choix invalide")
             break
         elif choice == "2":
             print("Vous avez choisi d'accéder au donjon.")
