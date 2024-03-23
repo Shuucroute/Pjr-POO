@@ -89,12 +89,11 @@ def combat(player, ally, enemies):
         # Afficher la barre de mana du Druid
         if isinstance(ally, Druid):
             ally.show_manabar()
-            
-            # Vérifier si 5 boss ont été tués et ajouter le Balrog au jeu        
+
+            # Vérifier si 5 boss ont été tués et ajouter le Balrog au jeu
         if Boss.boss_killed_count >= 5:
             print("Cinqs Boss sont morts ! Le Balrog apparait !")
             enemies.append(Balrog.create_mega_boss())
-
 
         # Vérifier si les ennemis sont toujours en vie
         if not enemies:
@@ -108,7 +107,6 @@ def combat(player, ally, enemies):
             if new_enemy:  # Si new_enemy n'est pas None, c'est un Balrog
                 enemies.append(new_enemy)
                 break  # arrêter la boucle une fois qu'un Balrog a été ajouté
-            
 
 class Dungeon:
     def __init__(self, name, enemies):
@@ -203,10 +201,10 @@ def start_game(player, ally):
     for dungeon in dungeons:
         print(f"Tu rentres dans le {dungeon.name}!")
         combat(player, ally, dungeon.enemies)
-        if not player.is_alive():
+        if not player or not player.is_alive():
             print("Vous avez été vaincu ! Jeu terminé.")
             break
-        elif not ally.is_alive():
+        elif not ally or not ally.is_alive():
             print("Ton allié a été vaincu ! Jeu terminé.")
             break
         else:
