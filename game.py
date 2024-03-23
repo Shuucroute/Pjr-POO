@@ -129,32 +129,6 @@ def start_game(player, ally):
     dungeons = []
 
     dungeons.append(
-            Dungeon("Etage 4", [
-                Kondylos_o_Sarantapus.create_boss()
-                # ...
-            ]))
-    dungeons.append(
-            Dungeon("Etage 4", [
-                Kondylos_o_Sarantapus.create_boss()
-                # ...
-            ]))
-    dungeons.append(
-            Dungeon("Etage 4", [
-                Kondylos_o_Sarantapus.create_boss()
-                # ...
-            ]))
-    dungeons.append(
-            Dungeon("Etage 4", [
-                Kondylos_o_Sarantapus.create_boss()
-                # ...
-            ]))
-    dungeons.append(
-            Dungeon("Etage 4", [
-                Kondylos_o_Sarantapus.create_boss()
-                # ...
-            ]))
-
-    dungeons.append(
         Dungeon("Donjon 1", [
             Zombie.create_enemy() for _ in range(3)
             # ...
@@ -169,12 +143,12 @@ def start_game(player, ally):
             Zombie_guerrier.create_enemy() for _ in range(3)
             # ...
         ]))
-    # if random.random() < 0.4 :
-    #     dungeons.append(
-    #         Dungeon("Etage 4", [
-    #             Cadaverus_Devorator.create_boss()
-    #             # ...
-    #         ]))
+    if random.random() < 0.4 :
+        dungeons.append(
+            Dungeon("Etage 4", [
+                Cadaverus_Devorator.create_boss()
+                # ...
+            ]))
     dungeons.append(
         Dungeon("Donjon 2", [
             Skeletons.create_enemy()
@@ -190,12 +164,12 @@ def start_game(player, ally):
             armor_Skeletons.create_enemy() for _ in range(3)
             # ...
         ]))
-    # if random.random() < 0.4 :
-    #     dungeons.append(
-    #         Dungeon("Etage 4", [
-    #             Kondylos_o_Sarantapus.create_boss()
-    #             # ...
-    #         ]))
+    if random.random() < 0.4 :
+        dungeons.append(
+            Dungeon("Etage 4", [
+                Kondylos_o_Sarantapus.create_boss()
+                # ...
+            ]))
     dungeons.append(
         Dungeon("Donjon 3", [
             Goblins.create_enemy(),
@@ -206,12 +180,12 @@ def start_game(player, ally):
             big_goblins.create_enemy() for _ in range(3)
             # ...
         ]))
-    # if random.random() < 0.4 :
-    #     dungeons.append(
-    #         Dungeon("Etage 3", [
-    #             Roi_Gobelin.create_boss()
-    #             # ...
-    #         ]))
+    if random.random() < 0.4 :
+        dungeons.append(
+            Dungeon("Etage 3", [
+                Roi_Gobelin.create_boss()
+                # ...
+            ]))
     dungeons.append(
         Dungeon("Donjon 4", [
             Trolls.create_enemy() for _ in range(3)
@@ -222,12 +196,12 @@ def start_game(player, ally):
             Olog_hai.create_enemy() for _ in range(3)
             # ...
         ]))
-    # if random.random() < 0.4 :
-    #     dungeons.append(
-    #         Dungeon("Etage 4", [
-    #             Garrok_le_Féroce.create_boss()
-    #             # ...
-    #         ]))
+    if random.random() < 0.4 :
+        dungeons.append(
+            Dungeon("Etage 4", [
+                Garrok_le_Féroce.create_boss()
+                # ...
+            ]))
     # Ajouter le donjon Balrog après avoir tué 5 boss
     if Boss.boss_killed_count >= 5:
         dungeons.append(
