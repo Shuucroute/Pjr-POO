@@ -30,7 +30,7 @@ class Cadaverus_Devorator(Boss):
     @classmethod
     def create_boss(cls):
         cls.increase_boss_killed_count()
-        return cls(name="Cadaverus Devorator", dice=Dice(10), exp_reward=199)
+        return cls(name="Cadaverus Devorator", dice=Dice(10), exp_reward=50)
 
 class Kondylos_o_Sarantapus(Boss):
     def compute_damages(self, roll, target):
@@ -45,7 +45,7 @@ class Kondylos_o_Sarantapus(Boss):
     @classmethod
     def create_boss(cls):
         cls.increase_boss_killed_count()
-        return cls(name="Kondylos o Sarantapus", dice=Dice(10), exp_reward=200)
+        return cls(name="Kondylos o Sarantapus", dice=Dice(10), exp_reward=50)
 
 class Roi_Gobelin(Boss):
     def compute_damages(self, roll, target):
@@ -60,7 +60,7 @@ class Roi_Gobelin(Boss):
     @classmethod
     def create_boss(cls):
         cls.increase_boss_killed_count()
-        return cls(name="Roi Gobelin", dice=Dice(10), exp_reward=210, coins_reward=25)
+        return cls(name="Roi Gobelin", dice=Dice(10), exp_reward=55, coins_reward=25)
 
 class Garrok_le_Féroce(Boss):
     def compute_damages(self, roll, target):
@@ -75,7 +75,7 @@ class Garrok_le_Féroce(Boss):
     @classmethod
     def create_boss(cls):
         cls.increase_boss_killed_count()
-        return cls(name="Garrok le Féroce", dice=Dice(10), exp_reward=220, coins_reward=26)
+        return cls(name="Garrok le Féroce", dice=Dice(10), exp_reward=60, coins_reward=26)
 
 class Balrog(Character):
     def __init__(self, name="Balrog", hp=100, attack_value=50, defense_value=50, dice=Dice(15), exp_reward=1):
