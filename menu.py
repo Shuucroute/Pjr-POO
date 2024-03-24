@@ -59,13 +59,13 @@ def choose_character_class():
 
 def create_main_character(name, character_class):
     if character_class == "archer":
-        return character.Archer(name, 100, 100, 5,Dice(6), exp_reward=1)
+        return character.Archer(name, 20, 100, 5,Dice(6), exp_reward=1, coins_reward=1)
     elif character_class == "thief":
-        return character.Thief(name, 80, 12, 4,Dice(6), exp_reward=1)
+        return character.Thief(name, 22, 10, 4,Dice(6), exp_reward=1, coins_reward=1)
     elif character_class == "warrior":
-        return character.Warrior(name, 150, 6, 8,Dice(6), exp_reward=1)
+        return character.Warrior(name, 25, 12, 8,Dice(6), exp_reward=1, coins_reward=1)
     elif character_class == "mage":
-        return character.Mage(name, 80, 15, 3,Dice(6), exp_reward=1)
+        return character.Mage(name, 20, 12, 3,Dice(6), exp_reward=1, coins_reward=1)
 
 def choose_ally(character_class):
     print("Choisissez un allié avec des caractéristiques similaires à votre classe principale :")
@@ -83,19 +83,19 @@ def choose_ally(character_class):
             return None
         elif choice == 1:
             print("Vous avez choisi d'avoir un allié Archer.")
-            return character.Archer("Ally", 100, 10, 5,Dice(6), exp_reward=1)
+            return character.Archer("Ally", 100, 10, 5,Dice(6), exp_reward=1, coins_reward=1)
         elif choice == 2:
             print("Vous avez choisi d'avoir un allié Druid.")
-            return character.Druid("Ally", 120, 8, 6, 20, Dice(6), 1, 5)
+            return character.Druid("Ally", 120, 0, 6, 20, Dice(6), 1, 5, coins_reward=1)
         elif choice == 3:
             print("Vous avez choisi d'avoir un allié Thief.")
-            return character.Thief("Ally", 80, 12, 4,Dice(6), exp_reward=1)
+            return character.Thief("Ally", 80, 12, 4,Dice(6), exp_reward=1, coins_reward=1)
         elif choice == 4:
             print("Vous avez choisi d'avoir un allié Warrior.")
-            return character.Warrior("Ally", 150, 6, 8,Dice(6), exp_reward=1)
+            return character.Warrior("Ally", 150, 6, 8,Dice(6), exp_reward=1, coins_reward=1)
         elif choice == 5:
             print("Vous avez choisi d'avoir un allié Mage.")
-            return character.Mage("Ally", 80, 15, 3,Dice(6), exp_reward=1)
+            return character.Mage("Ally", 80, 15, 3,Dice(6), exp_reward=1, coins_reward=1)
         else:
             print("Choix invalide.")
 
@@ -137,6 +137,35 @@ def select_option(player):
             sys.exit()
         else:
             print("Choix invalide. Veuillez entrer une option valide (1, 2 ou 3).")
+
+    # Afficher le menu entre les donjons après avoir traité l'option choisie
+    show_dungeon_menu()
+    while True:
+        dungeon_choice = input("Entrez votre choix : ")
+        if dungeon_choice == "1":
+            print("Vous continuez vers le prochain donjon.")
+            # Ajoutez ici le code pour continuer vers le prochain donjon
+            break
+        elif dungeon_choice == "2":
+            print("Vous allez au magasin.")
+            shop = Shop()
+            shop.display_shop(player)
+            # Ajoutez ici le code pour permettre au joueur d'acheter des objets avant le prochain donjon
+            break
+        elif dungeon_choice == "3":
+            print("Au revoir !")
+            sys.exit()
+        else:
+            print("Choix invalide. Veuillez entrer une option valide (1, 2 ou 3).")
+
+# Définition de la fonction show_dungeon_menu
+def show_dungeon_menu():
+    print("Menu entre les donjons :")
+    print("/" * 30)
+    print("|", "1. Prochain donjon".ljust(35), "|")
+    print("|", "2. Aller au magasin".ljust(35), "|")
+    print("|", "3. Quitter".ljust(35), "|")
+    print("/" * 30)
 
 if __name__ == "__main__":
     print("Début du script...")

@@ -4,8 +4,8 @@ from dice import Dice
 class Boss(Character):
     boss_killed_count = 0
     
-    def __init__(self, name="Boss", hp=50, attack_value=20, defense_value=20, dice=Dice(10), exp_reward=1):
-        super().__init__(name, hp, attack_value, defense_value, dice, exp_reward)
+    def __init__(self, name="Boss", hp=50, attack_value=20, defense_value=20, dice=Dice(10), exp_reward=1, coins_reward=20):
+        super().__init__(name, hp, attack_value, defense_value, dice, exp_reward, coins_reward)
     
     @classmethod
     def increase_boss_killed_count(cls):
@@ -60,7 +60,7 @@ class Roi_Gobelin(Boss):
     @classmethod
     def create_boss(cls):
         cls.increase_boss_killed_count()
-        return cls(name="Roi Gobelin", dice=Dice(10), exp_reward=210)
+        return cls(name="Roi Gobelin", dice=Dice(10), exp_reward=210, coins_reward=25)
 
 class Garrok_le_Féroce(Boss):
     def compute_damages(self, roll, target):
@@ -75,7 +75,7 @@ class Garrok_le_Féroce(Boss):
     @classmethod
     def create_boss(cls):
         cls.increase_boss_killed_count()
-        return cls(name="Garrok le Féroce", dice=Dice(10), exp_reward=220)
+        return cls(name="Garrok le Féroce", dice=Dice(10), exp_reward=220, coins_reward=26)
 
 class Balrog(Character):
     def __init__(self, name="Balrog", hp=100, attack_value=50, defense_value=50, dice=Dice(15), exp_reward=1):

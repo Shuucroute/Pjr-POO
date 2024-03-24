@@ -1,10 +1,11 @@
 from character import Character, Warrior, Mage, Thief, Archer, Druid
-from ennemis import Zombie,Zombie2_0,Zombie_guerrier, Skeletons,Reinforced_Skeleton,armor_Skeletons ,Goblins,big_goblins ,Trolls, Olog_hai
+from ennemis import Zombie, Zombie2_0, Zombie_guerrier, Skeletons, Reinforced_Skeleton, armor_Skeletons, Goblins, big_goblins, Trolls, Olog_hai
 from dice import Dice
 import menu
 import random
 from boss import Cadaverus_Devorator, Kondylos_o_Sarantapus, Roi_Gobelin, Garrok_le_Féroce, Balrog, kill_boss, Boss
 import random
+
 
 class Player(Character):
     def __init__(self, name, health, attack, defense, dice, exp_reward):
@@ -38,35 +39,32 @@ def combat(player, ally, enemies):
                 if not enemy.is_alive():
                     print(f"{enemy.name} a été vaincu !")
                     player.gain_exp(enemy.exp_reward)
+                    player.get_coins(enemy.coins_reward)
                     if isinstance(enemy, Boss):
                         Boss.increase_boss_killed_count()
                     enemies.pop(enemy_choice - 1)
                 else:
                     print(f"{enemy.name} contre-attaque!")
+                    
+                    # Attaque automatique de l'allié
                     if ally:
-                        print("\nChoisissez un ennemi que votre allié devra attaquer:")
-                        for i, enemy in enumerate(enemies, 1):
-                            print(f"{i}. {enemy.name}")
-                        ally_enemy_choice = int(input("Entrez le numéro de l'ennemi: "))
-                        if 1 <= ally_enemy_choice <= len(enemies):
-                            ally_enemy = enemies[ally_enemy_choice - 1]
-                            ally.attack(ally_enemy)
-                            if not ally_enemy.is_alive():
-                                print(f"{ally_enemy.name} a été vaincu !")
-                                ally.gain_exp(ally_enemy.exp_reward)
-                                enemies.pop(ally_enemy_choice - 1)
-                            else:
-                                print(f"{ally_enemy.name} contre-attaque!")
-                                player.defense(ally_enemy.attack_value, ally_enemy)
-                                if not player.is_alive():
-                                    print(f"{player.name} a été vaincu!")
-                                    break
-                                else:
-                                    print(f"{player.name} a résisté à l'attaque de {ally_enemy.name}!")
+                        ally_attack_enemy = random.choice(enemies)
+                        ally.attack(ally_attack_enemy)
+                        if not ally_attack_enemy.is_alive():
+                            print(f"{ally.name} a vaincu {ally_attack_enemy.name}!")
+                            ally.gain_exp(ally_attack_enemy.exp_reward)
+                            enemies.remove(ally_attack_enemy)
                         else:
-                            print("Numéro d'ennemi invalide.")
+                            print(f"{ally.name} attaque {ally_attack_enemy.name}!")
                     else:
                         print("Tu n'as pas d'allié.")
+                    
+                    player.defense(enemy.attack_value, enemy)
+                    if not player.is_alive():
+                        print(f"{player.name} a été vaincu!")
+                        break
+                    else:
+                        print(f"{player.name} a résisté à l'attaque de {enemy.name}!")
             else:
                 print("Numéro d'ennemi invalide.")
         elif choice == "2":
@@ -107,100 +105,34 @@ def combat(player, ally, enemies):
             if new_enemy:  # Si new_enemy n'est pas None, c'est un Balrog
                 enemies.append(new_enemy)
                 break  # arrêter la boucle une fois qu'un Balrog a été ajouté
-
+            
 class Dungeon:
-    def __init__(self, name, enemies):
+    def __init__(self, name):
         self.name = name
-        self.enemies = enemies
+        self.floors = []
+
+    def add_floor(self, enemies):
+        self.floors.append(enemies)
+
 
 def start_game(player, ally):
     print("Bienvenue dans le jeu !")
-    dungeons = []
+    dungeon1 = Dungeon("Donjon Zombie")
+    dungeon2 = Dungeon("Donjon Squelettes")
+    dungeon3 = Dungeon("Donjon Gobelins")
+    dungeon4 = Dungeon("Donjon Trolls")
+    
+    # Ajout des étages avec les ennemis correspondants
+    dungeon1.add_floor([Zombie.create_enemy() for _ in range(3)])  # Etage 1 avec des Zombies
+    dungeon1.add_floor([Zombie2_0.create_enemy() for _ in range(3)])  # Etage 2 avec des Zombie2_0
+    dungeon1.add_floor([Zombie_guerrier.create_enemy() for _ in range(3)])  # Etage 3 avec des Zombie_guerrier
+    if random.random() < 0.4:
+        dungeon1.add_floor([Cadaverus_Devorator.create_boss()])  # Etage 4 avec un boss
 
-    dungeons.append(
-        Dungeon("Donjon 1", [
-            Zombie.create_enemy() for _ in range(3)
-            # ...
-        ]))
-    dungeons.append(
-        Dungeon("Etage 2", [
-            Zombie2_0.create_enemy() for _ in range(3)
-            #...
-        ]))
-    dungeons.append(
-        Dungeon("Etage 3", [
-            Zombie_guerrier.create_enemy() for _ in range(3)
-            # ...
-        ]))
-    if random.random() < 0.4 :
-        dungeons.append(
-            Dungeon("Etage 4", [
-                Cadaverus_Devorator.create_boss()
-                # ...
-            ]))
-    dungeons.append(
-        Dungeon("Donjon 2", [
-            Skeletons.create_enemy()
-            # ...
-        ]))
-    dungeons.append(
-        Dungeon("Etage 2", [
-            Reinforced_Skeleton.create_enemy() for _ in range(3)
-            # ...
-        ]))
-    dungeons.append(
-        Dungeon("Etage 3", [
-            armor_Skeletons.create_enemy() for _ in range(3)
-            # ...
-        ]))
-    if random.random() < 0.4 :
-        dungeons.append(
-            Dungeon("Etage 4", [
-                Kondylos_o_Sarantapus.create_boss()
-                # ...
-            ]))
-    dungeons.append(
-        Dungeon("Donjon 3", [
-            Goblins.create_enemy(),
-            # ...
-        ]))
-    dungeons.append(
-        Dungeon("Etage 2", [
-            big_goblins.create_enemy() for _ in range(3)
-            # ...
-        ]))
-    if random.random() < 0.4 :
-        dungeons.append(
-            Dungeon("Etage 3", [
-                Roi_Gobelin.create_boss()
-                # ...
-            ]))
-    dungeons.append(
-        Dungeon("Donjon 4", [
-            Trolls.create_enemy() for _ in range(3)
-            # ...
-        ]))
-    dungeons.append(
-        Dungeon("Etage 2", [
-            Olog_hai.create_enemy() for _ in range(3)
-            # ...
-        ]))
-    if random.random() < 0.4 :
-        dungeons.append(
-            Dungeon("Etage 4", [
-                Garrok_le_Féroce.create_boss()
-                # ...
-            ]))
-    # Ajouter le donjon Balrog après avoir tué 5 boss
-    if Boss.boss_killed_count >= 5:
-        dungeons.append(
-            Dungeon("Une autre dimension", [
-                Balrog.create_mega_boss()
-                # ...
-            ]))
-    for dungeon in dungeons:
-        print(f"Tu rentres dans le {dungeon.name}!")
-        combat(player, ally, dungeon.enemies)
+    for floor_num, enemies in enumerate(dungeon1.floors, start=1):
+        print(f"Tu rentres dans le {dungeon1.name}, étage {floor_num}!")
+        combat(player, ally, enemies)
+        # Réinitialisation de la vie et de la mana entre les étages
         if not player or not player.is_alive():
             print("Vous avez été vaincu ! Jeu terminé.")
             break
@@ -208,9 +140,85 @@ def start_game(player, ally):
             print("Ton allié a été vaincu ! Jeu terminé.")
             break
         else:
-            print(f"Vous avez vaincu le {dungeon.name}! Passons au donjon suivant...")
-            # Add logic here to move on to the next dungeon
-            for enemy in dungeon.enemies:
-                if isinstance(enemy, Boss) and not enemy.is_alive():
-                    kill_boss()
-            input("Appuyez sur Entrée pour continuer...")
+            print(f"Vous avez vaincu l'étage {floor_num} du {dungeon1.name}!")
+            if floor_num < len(dungeon1.floors):
+                print("Passons à l'étage suivant...")
+                input("Appuyez sur Entrée pour continuer...")
+    else:
+        print("Félicitations ! Vous avez vaincu tous les étages du donjon Zombie.")
+        
+    
+    dungeon2.add_floor([Skeletons.create_enemy() for _ in range(3)])
+    dungeon2.add_floor([Reinforced_Skeleton.create_enemy() for _ in range(3)])
+    dungeon2.add_floor([armor_Skeletons.create_enemy() for _ in range(3)])
+    if random.random() < 0.4:
+        dungeon2.add_floor([Kondylos_o_Sarantapus.create_boss()])
+    for floor_num, enemies in enumerate(dungeon2.floors, start=1):
+        print(f"Tu rentres dans le {dungeon2.name}, étage {floor_num}!")
+        combat(player, ally, enemies)
+        player.reset_stats()
+        ally.reset_stats()
+        if not player or not player.is_alive():
+            print("Vous avez été vaincu ! Jeu terminé.")
+            break
+        elif not ally or not ally.is_alive():
+            print("Ton allié a été vaincu ! Jeu terminé.")
+            break
+        else:
+            print(f"Vous avez vaincu l'étage {floor_num} du {dungeon2.name}!")
+            if floor_num < len(dungeon2.floors):
+                print("Passons à l'étage suivant...")
+                input("Appuyez sur Entrée pour continuer...")
+    else:
+        print("Félicitations ! Vous avez vaincu tous les étages du donjon squelettes.")
+   
+    
+
+    dungeon3.add_floor([Goblins.create_enemy() for _ in range(3)]) 
+    dungeon3.add_floor([big_goblins.create_enemy() for _ in range(3)])
+    if random.random() < 0.4:
+        dungeon3.add_floor([Roi_Gobelin.create_boss()])  
+
+    for floor_num, enemies in enumerate(dungeon3.floors, start=1):
+        print(f"Tu rentres dans le {dungeon3.name}, étage {floor_num}!")
+        combat(player, ally, enemies)
+        player.reset_stats()
+        ally.reset_stats()
+        if not player or not player.is_alive():
+            print("Vous avez été vaincu ! Jeu terminé.")
+            break
+        elif not ally or not ally.is_alive():
+            print("Ton allié a été vaincu ! Jeu terminé.")
+            break
+        else:
+            print(f"Vous avez vaincu l'étage {floor_num} du {dungeon3.name}!")
+            if floor_num < len(dungeon3.floors):
+                print("Passons à l'étage suivant...")
+                input("Appuyez sur Entrée pour continuer...")
+    else:
+        print("Félicitations ! Vous avez vaincu tous les étages du donjon Gobelins.")
+
+
+    dungeon4.add_floor([Trolls.create_enemy() for _ in range(3)])
+    dungeon4.add_floor([Olog_hai.create_enemy() for _ in range(3)])
+    if random.random() < 0.4:
+        dungeon4.add_floor([Garrok_le_Féroce.create_boss()])
+
+    for floor_num, enemies in enumerate(dungeon4.floors, start=1):
+        print(f"Tu rentres dans le {dungeon4.name}, étage {floor_num}!")
+        combat(player, ally, enemies)
+        player.reset_stats()
+        ally.reset_stats()
+        if not player or not player.is_alive():
+            print("Vous avez été vaincu ! Jeu terminé.")
+            break
+        elif not ally or not ally.is_alive():
+            print("Ton allié a été vaincu ! Jeu terminé.")
+            break
+        else:
+            print(f"Vous avez vaincu l'étage {floor_num} du {dungeon4.name}!")
+            if floor_num < len(dungeon4.floors):
+                print("Passons à l'étage suivant...")
+                input("Appuyez sur Entrée pour continuer...")
+    else:
+        print("Félicitations ! Vous avez vaincu tous les étages du donjon Trolls.")
