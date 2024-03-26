@@ -175,8 +175,8 @@ class TripleArc(Arc):
         
 
 class Cape(Character):
-    def __init__(self, name, price, bonus):
-        super().__init__(name, 0, 0, 0, 0, 0)
+    def __init__(self, name, price, bonus, coins_reward=0):
+        super().__init__(name, 0, 0, 0, 0, 0, coins_reward=coins_reward)
         self.price = price
         self.bonus = bonus
 
