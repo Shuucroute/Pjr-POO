@@ -1,20 +1,25 @@
 import menu
 import game
 import character
+from rich.console import Console
 
+console = Console()
 
-# Afficher le menu principal et choisir un personnage
-player, ally = menu.select_character()
+def main():
+    menu.show_welcome_screen()
 
-# Si aucun personnage n'est sélectionné, afficher un message et quitter
-if player is None:
-    print("Aucun personnage n'a été sélectionné.")
-    exit()
+    player, ally = menu.select_character()
 
-# Ajouter le personnage principal à la liste d'alliés si l'allié est un druide
-if isinstance(ally, character.Druid):
-    ally.allies.append(player)
+    if player is None:
+        console.print("Aucun personnage n'a été sélectionné.", style="bold red")
+        exit()
 
-# Lancer le jeu avec le personnage et l'allié sélectionnés
-menu.select_option(player)
-game.start_game(player, ally)
+    if isinstance(ally, character.Druid):
+        ally.allies.append(player)
+
+    while True:
+        menu.select_option(player, ally)
+        game.start_game(player, ally)
+
+if __name__ == "__main__":
+    main()

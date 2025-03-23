@@ -13,8 +13,10 @@ class Character:
         self.exp = 0  # Points d'expérience
         self.level = 1  # Niveau
         self.exp_reward = exp_reward
-        self.coins= 0 # Nombres de coins
+        self.coins = 0  # Nombres de coins
         self.coins_reward = coins_reward
+        self.zombies_killed = 0  # Ajout de l'attribut pour suivre les zombies tués
+        self.goblins_killed = 0  # Ajout de l'attribut pour suivre les gobelins tués
 
     def get_exp_reward(self):
         return self.exp_reward
@@ -27,7 +29,6 @@ class Character:
     def show_coins(self):
         current_coins = self.coins
         print(f"{self.name} : {current_coins} 🪙")
-    
     
     def reset_stats(self):
         self.hp = self.hp_max
@@ -60,7 +61,6 @@ class Character:
         if current_exp == max_exp:
             current_exp = 0  # Si l'expérience est au maximum, afficher 0
         print(f"{self.name} : {current_exp}/{max_exp} EXP")
-
 
     def __str__(self) -> str:
         return f"""I'm {self.name}. Those are my caracs :
