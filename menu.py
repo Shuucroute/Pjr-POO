@@ -100,7 +100,7 @@ def load_game():
     return player, ally
 
 def show_main_menu():
-    console.print(Panel.fit("Bienvenue dans Légendes d'Etheria !", style="bold blue"))
+    console.print(Panel.fit("Les Légendes d'Etheria !", style="bold blue"))
     console.print("1. Nouvelle partie", style="bold green")
     console.print("2. Charger une partie", style="bold yellow")
     console.print("3. Quitter", style="bold red")
